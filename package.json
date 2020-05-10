@@ -6,6 +6,7 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
+    "test:debug": "node --inspect-brk node_modules/.bin/vue-cli-service test:unit --no-cache --watch --runInBand",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
@@ -14,12 +15,14 @@
     "core-js": "^2.6.5",
     "express": "^4.17.1",
     "firebase": "^7.14.2",
+    "firestore-jest-mock": "^0.3.0",
     "immer": "^6.0.5",
     "vue": "^2.6.10",
     "vue-class-component": "^7.0.2",
     "vue-property-decorator": "^8.1.0",
     "vue-router": "^3.0.3",
-    "vuex": "^3.3.0"
+    "vuex": "^3.3.0",
+    "vuexfire": "^3.2.2"
   },
   "devDependencies": {
     "@types/jest": "^23.1.4",
@@ -29,9 +32,11 @@
     "@vue/cli-service": "^3.12.0",
     "@vue/test-utils": "1.0.0-beta.29",
     "babel-core": "7.0.0-bridge.0",
+    "firebase-mock": "^2.3.2",
     "node-sass": "^4.12.0",
     "sass-loader": "^8.0.0",
     "ts-jest": "^23.0.0",
+    "ts-mock-firebase": "^2.3.0",
     "typescript": "^3.4.3",
     "vue-template-compiler": "^2.6.10"
   }
