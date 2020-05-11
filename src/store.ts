@@ -1,15 +1,20 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import { vuexfireMutations } from 'vuexfire';
-import { GameModule } from './store/modules/game';
+import { GameModule, GameState } from './store/modules/game';
+import { PlayerState, PlayerModule } from './store/modules/player';
 
 Vue.use(Vuex);
 
-export default new Vuex.Store({
-  state: {},
+export interface State {
+  game: GameState;
+  player: PlayerState;
+}
+
+export default new Vuex.Store<State>({
   mutations: {
     ...vuexfireMutations,
   },
   actions: {},
-  modules: { game: GameModule },
+  modules: { game: GameModule, player: PlayerModule },
 });

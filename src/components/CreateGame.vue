@@ -9,30 +9,22 @@
 
     <b-tab-item label="Create Game">
       <b-field label="Player Name">
-        <b-input></b-input>
+        <b-input v-model="hostPlayerName"></b-input>
       </b-field>
-      <b-button type="is-primary" v-on:click="callCreateGame()">Create Game</b-button>
+      <b-button type="is-primary" v-on:click="createGame({ hostPlayerName })"
+        >Create Game</b-button
+      >
     </b-tab-item>
   </b-tabs>
 </template>
 
 <script lang="ts">
-import { createComponent, defineComponent } from "@vue/composition-api";
-import { createGame } from "@/store/action-types";
-import { Store } from "vuex";
+import Vue from 'vue';
+import { mapActions } from 'vuex';
+import { createGame } from '../store/action-types';
 
-export default defineComponent({
-  setup: (props: {}, { root }) => {
-    const { callCreateGame } = useCreateGameFirebaseConnection(root.$store);
-    return { callCreateGame };
-  }
+export default Vue.extend({
+  data: () => ({ hostPlayerName: '' }),
+  methods: { ...mapActions([createGame]) },
 });
-
-function useCreateGameFirebaseConnection(store: Store<{}>) {
-  const callCreateGame = () => {
-    store.dispatch(createGame);
-  };
-
-  return { callCreateGame };
-}
 </script>

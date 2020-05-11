@@ -5,13 +5,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "@vue/composition-api";
-import CreateGame from "../components/CreateGame.vue";
-import { Store } from "vuex";
-import { createGame } from "@/store/action-types";
+import Vue from 'vue';
+import CreateGame from '@/components/CreateGame.vue';
 
-export default defineComponent({
-  setup() {},
-  components: { "create-game": CreateGame }
+export default Vue.extend({
+  components: { 'create-game': CreateGame },
 });
 </script>

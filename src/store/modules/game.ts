@@ -3,6 +3,7 @@ import { CREATE_GAME_SUCCESS } from '../mutation-types';
 import { createGame, setupGameBinding } from '../action-types';
 import { db } from '@/db';
 import { firestoreAction } from 'vuexfire';
+import { State } from '@/store';
 
 export enum LoadingStatus {
   NOT_STARTED,
@@ -24,29 +25,7 @@ export interface GameState {
   game: Game;
 }
 
-export const actions: ActionTree<GameState, {}> = {
-  async [createGame]({ dispatch }) {
-    const dummyGame: Game = {
-      currentCard: null,
-      currentPlayer: null,
-      gameCompleted: false,
-    };
-    const newGame = await db.collection('games').add(dummyGame);
-
-    dispatch(setupGameBinding, { newGameId: newGame.id });
-  },
-  [setupGameBinding]: firestoreAction(
-    ({ commit, bindFirestoreRef }, payload: { newGameId: string }) => {
-      commit(CREATE_GAME_SUCCESS, payload);
-      return bindFirestoreRef(
-        'game',
-        db.collection('games').doc(payload.newGameId),
-      );
-    },
-  ),
-};
-
-export const GameModule: Module<GameState, {}> = {
+export const GameModule: Module<GameState, State> = {
   state: () => ({
     gameId: null,
     gameLoadingStatus: LoadingStatus.NOT_STARTED,
@@ -54,12 +33,39 @@ export const GameModule: Module<GameState, {}> = {
   }),
   mutations: {
     [CREATE_GAME_SUCCESS](state, payload: { newGameId: string }) {
-      return {
-        ...state,
-        gameId: payload.newGameId,
-        gameLoadingStatus: LoadingStatus.OK,
-      };
+      state.gameId = payload.newGameId;
+      state.gameLoadingStatus = LoadingStatus.OK;
     },
   },
-  actions,
+  actions: {
+    async [createGame]({ dispatch }, payload: { hostPlayerName: string }) {
+      const dummyGame: Game = {
+        currentCard: null,
+        currentPlayer: null,
+        gameCompleted: false,
+      };
+      const newGame = await db.collection('games').add(dummyGame);
+      debugger;
+
+      dispatch(setupGameBinding, {
+        newGameId: newGame.id,
+        hostPlayerName: payload.hostPlayerName,
+      });
+      dispatch('setupPlayerBinding');
+    },
+    [setupGameBinding]: firestoreAction(
+      (
+        { commit, bindFirestoreRef },
+        payload: { newGameId: string; hostPlayerName: string },
+      ) => {
+        commit(CREATE_GAME_SUCCESS, { newGameId: payload.newGameId });
+        commit('addPlayer', { hostPlayerName: payload.hostPlayerName });
+        return bindFirestoreRef(
+          'game',
+          db.collection('games').doc(payload.newGameId),
+          { reset: false },
+        );
+      },
+    ),
+  },
 };
