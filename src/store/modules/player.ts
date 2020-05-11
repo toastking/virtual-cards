@@ -10,33 +10,28 @@ export interface Player {
 
 export interface PlayerState {
   players: [];
-  currentPlayerId: string | null;
 }
 
+/** Module to handle player state, like who's in the game and who is the current player. */
 export const PlayerModule: Module<PlayerState, State> = {
   state: () => ({ currentPlayerId: null, players: [] }),
   actions: {
+    /** Add a player to the firebase store */
     async addPlayer({ rootState }, player: Player) {
-      const gameId = rootState.game.gameId;
+      const { gameId } = rootState.game;
       if (gameId) {
-        await db
+        return db
           .collection('games')
           .doc(gameId)
           .collection('players')
           .add(player);
       }
     },
+    /** Sets up the firebase binding for the players list  */
     setupPlayerBinding: firestoreAction(
-      async (
-        { dispatch, bindFirestoreRef, rootState },
-        payload: { hostPlayerName: string }
-      ) => {
+      async ({ bindFirestoreRef, rootState }) => {
         const { gameId } = rootState.game;
         if (gameId) {
-          // Add the initial player first so we can bind to the subcollection
-          const hostPlayer: Player = { name: payload.hostPlayerName };
-          dispatch('addPlayer', hostPlayer);
-
           return bindFirestoreRef(
             'players',
             db

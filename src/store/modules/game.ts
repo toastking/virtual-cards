@@ -5,6 +5,7 @@ import { db } from '@/db';
 import { firestoreAction } from 'vuexfire';
 import { State } from '@/store';
 import router from '@/router';
+import { Player } from './player';
 
 export enum LoadingStatus {
   NOT_STARTED,
@@ -26,6 +27,7 @@ export interface GameState {
   game: Game;
 }
 
+/** Module to handle game state. This is things like the game ID and the completion state. */
 export const GameModule: Module<GameState, State> = {
   state: () => ({
     gameId: null,
@@ -39,7 +41,8 @@ export const GameModule: Module<GameState, State> = {
     },
   },
   actions: {
-    async [createGame](
+    /** Create a new game object and route to the lobby */
+    async createGame(
       { dispatch, commit },
       payload: { hostPlayerName: string }
     ) {
@@ -50,29 +53,22 @@ export const GameModule: Module<GameState, State> = {
       };
       const newGame = await db.collection('games').add(dummyGame);
 
-      dispatch(setupGameBinding, {
-        newGameId: newGame.id,
-        hostPlayerName: payload.hostPlayerName,
-      });
+      // After we added the game add the host player
+      const hostPlayer: Player = { name: payload.hostPlayerName };
+      await dispatch('addPlayer', hostPlayer);
 
       commit(CREATE_GAME_SUCCESS, { newGameId: newGame.id });
       dispatch('routeToLobby', { newGameId: newGame.id });
     },
-    [setupGameBinding]: firestoreAction(
-      async (
-        { dispatch, bindFirestoreRef },
-        payload: { newGameId: string; hostPlayerName: string }
-      ) => {
-        await bindFirestoreRef(
-          'game',
-          db.collection('games').doc(payload.newGameId),
-          { reset: false }
-        );
-
-        const { hostPlayerName } = payload;
-        dispatch('setupPlayerBinding', { hostPlayerName });
+    /** Setup the firebase binding for the game */
+    setupGameBinding: firestoreAction(async ({ bindFirestoreRef, state }) => {
+      const { gameId } = state;
+      if (gameId) {
+        return bindFirestoreRef('game', db.collection('games').doc(gameId), {
+          reset: false,
+        });
       }
-    ),
+    }),
     routeToLobby({}, payload: { newGameId: string }) {
       router.push(`lobby/${payload.newGameId}`);
     },

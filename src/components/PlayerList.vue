@@ -15,10 +15,9 @@ import { mapState } from 'vuex';
 import { State } from '@/store';
 import { GameModule } from '../store/modules/game';
 export default Vue.extend({
-  computed: mapState({
-    players: state => {
-      console.log(state);
-      return (state as State).player.players;
+  computed: mapState<State>({
+    players(state: State) {
+      return state.player.players;
     },
   }),
 });
