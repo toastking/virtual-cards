@@ -5,45 +5,47 @@ import { firestoreAction } from 'vuexfire';
 
 export interface Player {
   name: string;
-  gameId: string;
+  id?: string;
 }
 
 export interface PlayerState {
-  players: { [uid: string]: Player };
+  players: [];
   currentPlayerId: string | null;
 }
 
 export const PlayerModule: Module<PlayerState, State> = {
-  state: () => ({ currentPlayerId: null, players: {} }),
-  mutations: {
-    addPlayer(state, payload: { playerId: string; player: Player }) {
-      state.players = { ...state.players, [payload.playerId]: payload.player };
-    },
-  },
+  state: () => ({ currentPlayerId: null, players: [] }),
   actions: {
-    async addPlayer({ commit, rootState }, player: Player) {
+    async addPlayer({ rootState }, player: Player) {
       const gameId = rootState.game.gameId;
       if (gameId) {
-        const newPlayer = await db
+        await db
           .collection('games')
           .doc(gameId)
           .collection('players')
           .add(player);
-
-        commit('addPlayerSuccess', { playerId: newPlayer.id, player });
       }
     },
-    setupPlayerBinding: firestoreAction(({ bindFirestoreRef, rootState }) => {
-      const { gameId } = rootState.game;
-      if (gameId) {
-        return bindFirestoreRef(
-          'players',
-          db
-            .collection('games')
-            .doc(gameId)
-            .collection('players')
-        );
+    setupPlayerBinding: firestoreAction(
+      async (
+        { dispatch, bindFirestoreRef, rootState },
+        payload: { hostPlayerName: string }
+      ) => {
+        const { gameId } = rootState.game;
+        if (gameId) {
+          // Add the initial player first so we can bind to the subcollection
+          const hostPlayer: Player = { name: payload.hostPlayerName };
+          dispatch('addPlayer', hostPlayer);
+
+          return bindFirestoreRef(
+            'players',
+            db
+              .collection('games')
+              .doc(gameId)
+              .collection('players')
+          );
+        }
       }
-    }),
+    ),
   },
 };

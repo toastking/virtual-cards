@@ -4,6 +4,7 @@ import { createGame, setupGameBinding } from '../action-types';
 import { db } from '@/db';
 import { firestoreAction } from 'vuexfire';
 import { State } from '@/store';
+import router from '@/router';
 
 export enum LoadingStatus {
   NOT_STARTED,
@@ -38,34 +39,42 @@ export const GameModule: Module<GameState, State> = {
     },
   },
   actions: {
-    async [createGame]({ dispatch }, payload: { hostPlayerName: string }) {
+    async [createGame](
+      { dispatch, commit },
+      payload: { hostPlayerName: string }
+    ) {
       const dummyGame: Game = {
         currentCard: null,
         currentPlayer: null,
         gameCompleted: false,
       };
       const newGame = await db.collection('games').add(dummyGame);
-      debugger;
 
       dispatch(setupGameBinding, {
         newGameId: newGame.id,
         hostPlayerName: payload.hostPlayerName,
       });
-      dispatch('setupPlayerBinding');
+
+      commit(CREATE_GAME_SUCCESS, { newGameId: newGame.id });
+      dispatch('routeToLobby', { newGameId: newGame.id });
     },
     [setupGameBinding]: firestoreAction(
-      (
-        { commit, bindFirestoreRef },
-        payload: { newGameId: string; hostPlayerName: string },
+      async (
+        { dispatch, bindFirestoreRef },
+        payload: { newGameId: string; hostPlayerName: string }
       ) => {
-        commit(CREATE_GAME_SUCCESS, { newGameId: payload.newGameId });
-        commit('addPlayer', { hostPlayerName: payload.hostPlayerName });
-        return bindFirestoreRef(
+        await bindFirestoreRef(
           'game',
           db.collection('games').doc(payload.newGameId),
-          { reset: false },
+          { reset: false }
         );
-      },
+
+        const { hostPlayerName } = payload;
+        dispatch('setupPlayerBinding', { hostPlayerName });
+      }
     ),
+    routeToLobby({}, payload: { newGameId: string }) {
+      router.push(`lobby/${payload.newGameId}`);
+    },
   },
 };
