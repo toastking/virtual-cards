@@ -21,6 +21,14 @@ describe.only('Game Store Module', () => {
     expect(commit).toHaveBeenCalledWith(CREATE_GAME_SUCCESS, {
       newGameId: expect.any(String),
     });
+    expect(
+      Object.values(
+        firebaseMock
+          .firestore()
+          .mocker.collection('games')
+          .mocker.getShallowCollection()
+      ).length
+    ).toBe(1);
     expect(dispatch).toHaveBeenCalledWith('routeToLobby', {
       newGameId: expect.any(String),
     });
