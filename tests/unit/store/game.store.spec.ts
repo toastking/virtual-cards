@@ -1,7 +1,11 @@
 import { app } from '@/db';
-import { GameModule, GameState, LoadingStatus } from '@/store/modules/game';
+import {
+  GameModule,
+  GameState,
+  LoadingStatus,
+  Game,
+} from '@/store/modules/game';
 import { exposeMockFirebaseApp } from 'ts-mock-firebase';
-import { CREATE_GAME_SUCCESS } from '@/store/mutation-types';
 
 describe('Game Store Module', () => {
   const firebaseMock = exposeMockFirebaseApp(app);
@@ -19,14 +23,18 @@ describe('Game Store Module', () => {
 
       await createGameAction({ dispatch, commit }, { hostPlayerName: 'foo' });
       expect(dispatch).toHaveBeenCalledWith('addPlayer', { name: 'foo' });
-      expect(
-        Object.values(
-          firebaseMock
-            .firestore()
-            .mocker.collection('games')
-            .mocker.getShallowCollection()
-        ).length
-      ).toBe(1);
+
+      // Test the game and player were added
+      const games = firebaseMock.firestore().mocker.collection('games');
+      const gameId = Object.keys(games.mocker.getShallowCollection())[0];
+      const game = games.mocker.doc(gameId);
+      const expectedGame: Game = {
+        currentCard: null,
+        currentPlayer: null,
+        gameCompleted: false,
+      };
+      expect(game.mocker.getData()).toEqual(expectedGame);
+
       expect(dispatch).toHaveBeenCalledWith('routeToLobby', {
         newGameId: expect.any(String),
       });
