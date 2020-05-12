@@ -25,6 +25,8 @@ export const PlayerModule: Module<PlayerState, State> = {
           .doc(gameId)
           .collection('players')
           .add(player);
+      } else {
+        console.error('Invalid game id');
       }
     },
     /** Sets up the firebase binding for the players list  */
