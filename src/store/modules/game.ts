@@ -40,10 +40,7 @@ export const GameModule: Module<GameState, State> = {
   },
   actions: {
     /** Create a new game object and route to the lobby */
-    async createGame(
-      { dispatch, commit },
-      payload: { hostPlayerName: string }
-    ) {
+    async createGame({ dispatch }, payload: { hostPlayerName: string }) {
       const dummyGame: Game = {
         currentCard: null,
         currentPlayer: null,
@@ -63,7 +60,7 @@ export const GameModule: Module<GameState, State> = {
       commit('createGameSuccess', { newGameId: payload.gameId });
 
       const player: Player = { name: payload.playerName };
-      dispatch('addPlayer', player);
+      dispatch('addUserPlayer', player);
 
       dispatch('routeToLobby', { newGameId: payload.gameId });
     },

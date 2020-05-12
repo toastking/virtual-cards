@@ -13,6 +13,10 @@ describe('App', () => {
   localVue.use(VueRouter);
 
   afterEach(() => {
+    jest.resetAllMocks();
+  });
+
+  afterEach(() => {
     store.reset();
   });
 

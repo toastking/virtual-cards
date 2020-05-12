@@ -9,7 +9,7 @@ export interface Player {
 }
 
 export interface PlayerState {
-  players: [];
+  players: Player[];
   /** The player id for the current user */
   userPlayerId: string;
 }
@@ -32,6 +32,16 @@ export const PlayerModule: Module<PlayerState, State> = {
           .doc(gameId)
           .collection('players')
           .add(player);
+      }
+    },
+    /** Adds the player for the current user */
+    async addUserPlayer({ dispatch, commit }, player: Player) {
+      const newPlayer: firebase.firestore.DocumentReference<
+        firebase.firestore.DocumentData
+      > | null = await dispatch('addPlayer', player);
+
+      if (newPlayer) {
+        commit('updateUserPlayerId', { playerId: newPlayer.id });
       }
     },
     /** Sets up the firebase binding for the players list  */

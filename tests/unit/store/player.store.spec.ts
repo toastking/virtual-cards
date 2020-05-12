@@ -12,6 +12,10 @@ describe('Player Store Module', () => {
     firebaseMock.firestore().mocker.reset(); // this will reset the whole database into an initial state
   });
 
+  afterEach(() => {
+    jest.resetAllMocks();
+  });
+
   describe('actions', () => {
     test('addPlayer', async () => {
       const firestoreMock = firebaseMock.firestore().mocker;
@@ -27,12 +31,27 @@ describe('Player Store Module', () => {
       expect(Object.values(players)).toEqual([player]);
     });
 
+    test('addUserPlayer', async () => {
+      const addUserPlayer = actions.addUserPlayer as Function;
+      const commit = jest.fn();
+      const dispatch = jest
+        .fn()
+        .mockReturnValue(Promise.resolve({ id: 'xyz' }));
+      const mockPlayer: Player = { name: 'foo' };
+
+      await addUserPlayer({ commit, dispatch }, mockPlayer);
+
+      expect(dispatch).toHaveBeenCalledWith('addPlayer', mockPlayer);
+      expect(commit).toHaveBeenCalledWith('updateUserPlayerId', {
+        playerId: 'xyz',
+      });
+    });
+
     test('storePlayerId', async () => {
       const storePlayerId = actions.storePlayerId as Function;
-      Storage.prototype.setItem = jest.fn();
 
       await storePlayerId({}, { playerId: 'foo' });
-      expect(localStorage.setItem).toBeCalledWith('playerId', 'foo');
+      expect(sessionStorage.setItem).toBeCalledWith('playerId', 'foo');
     });
   });
 

@@ -15,6 +15,9 @@ describe('Game Store Module', () => {
   beforeEach(() => {
     firebaseMock.firestore().mocker.reset(); // this will reset the whole database into an initial state
   });
+  afterEach(() => {
+    jest.resetAllMocks();
+  });
 
   describe('Actions', () => {
     test('createGame', async () => {
@@ -54,7 +57,7 @@ describe('Game Store Module', () => {
         newGameId: 'xyz',
       });
       const expectedPlayer: Player = { name: 'foo' };
-      expect(dispatch).toHaveBeenCalledWith('addPlayer', expectedPlayer);
+      expect(dispatch).toHaveBeenCalledWith('addUserPlayer', expectedPlayer);
 
       expect(dispatch).toHaveBeenCalledWith('routeToLobby', {
         newGameId: 'xyz',
