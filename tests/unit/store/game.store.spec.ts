@@ -6,6 +6,7 @@ import {
   Game,
 } from '@/store/modules/game';
 import { exposeMockFirebaseApp } from 'ts-mock-firebase';
+import { Player } from '@/store/modules/player';
 
 describe('Game Store Module', () => {
   const firebaseMock = exposeMockFirebaseApp(app);
@@ -16,13 +17,12 @@ describe('Game Store Module', () => {
   });
 
   describe('Actions', () => {
-    test('should create new game object then add the host player', async () => {
+    test('createGame', async () => {
       const createGameAction = actions.createGame as Function;
       const dispatch = jest.fn();
       const commit = jest.fn();
 
       await createGameAction({ dispatch, commit }, { hostPlayerName: 'foo' });
-      expect(dispatch).toHaveBeenCalledWith('addPlayer', { name: 'foo' });
 
       // Test the game and player were added
       const games = firebaseMock.firestore().mocker.collection('games');
@@ -35,8 +35,29 @@ describe('Game Store Module', () => {
       };
       expect(game.mocker.getData()).toEqual(expectedGame);
 
+      expect(dispatch).toHaveBeenCalledWith('joinGame', {
+        gameId,
+        playerName: 'foo',
+      });
+    });
+
+    test('joinGame', async () => {
+      const joinGame = actions.joinGame as Function;
+      const dispatch = jest.fn();
+      const commit = jest.fn();
+      await joinGame(
+        { dispatch, commit },
+        { gameId: 'xyz', playerName: 'foo' }
+      );
+
+      expect(commit).toHaveBeenCalledWith('createGameSuccess', {
+        newGameId: 'xyz',
+      });
+      const expectedPlayer: Player = { name: 'foo' };
+      expect(dispatch).toHaveBeenCalledWith('addPlayer', expectedPlayer);
+
       expect(dispatch).toHaveBeenCalledWith('routeToLobby', {
-        newGameId: expect.any(String),
+        newGameId: 'xyz',
       });
     });
   });

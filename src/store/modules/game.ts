@@ -50,14 +50,22 @@ export const GameModule: Module<GameState, State> = {
         gameCompleted: false,
       };
       const newGame = await db.collection('games').add(dummyGame);
+      dispatch('joinGame', {
+        gameId: newGame.id,
+        playerName: payload.hostPlayerName,
+      });
+    },
+    /** Joins a game by setting the gameId and creating a player with the player info */
+    joinGame(
+      { dispatch, commit },
+      payload: { gameId: string; playerName: string }
+    ) {
+      commit('createGameSuccess', { newGameId: payload.gameId });
 
-      commit('createGameSuccess', { newGameId: newGame.id });
+      const player: Player = { name: payload.playerName };
+      dispatch('addPlayer', player);
 
-      // After we added the game add the host player
-      const hostPlayer: Player = { name: payload.hostPlayerName };
-      await dispatch('addPlayer', hostPlayer);
-
-      dispatch('routeToLobby', { newGameId: newGame.id });
+      dispatch('routeToLobby', { newGameId: payload.gameId });
     },
     /** Setup the firebase binding for the game */
     setupGameBinding: firestoreAction(async ({ bindFirestoreRef, state }) => {

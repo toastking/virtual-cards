@@ -3,7 +3,7 @@ import { shallowMount, createLocalVue } from '@vue/test-utils';
 import Lobby from '@/views/Lobby.vue';
 import VueRouter from 'vue-router';
 
-describe.only('Lobby View', () => {
+describe('Lobby View', () => {
   const store = new Store({});
 
   const localVue = createLocalVue();
