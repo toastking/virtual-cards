@@ -4,6 +4,18 @@
   </main>
 </template>
 
+<script lang="ts">
+import Vue from 'vue';
+export default Vue.extend({
+  mounted() {
+    const playerId = sessionStorage.getItem('playerId');
+    if (playerId) {
+      this.$store.commit('updatePlayerId', { playerId });
+    }
+  },
+});
+</script>
+
 <style lang="scss">
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;

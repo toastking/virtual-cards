@@ -10,11 +10,18 @@ export interface Player {
 
 export interface PlayerState {
   players: [];
+  /** The player id for the current user */
+  userPlayerId: string;
 }
 
 /** Module to handle player state, like who's in the game and who is the current player. */
 export const PlayerModule: Module<PlayerState, State> = {
-  state: () => ({ currentPlayerId: null, players: [] }),
+  state: () => ({ currentPlayerId: null, players: [], userPlayerId: '' }),
+  mutations: {
+    updateUserPlayerId(state, payload: { playerId: string }) {
+      state.userPlayerId = payload.playerId;
+    },
+  },
   actions: {
     /** Add a player to the firebase store */
     async addPlayer({ rootState }, player: Player) {
@@ -25,8 +32,6 @@ export const PlayerModule: Module<PlayerState, State> = {
           .doc(gameId)
           .collection('players')
           .add(player);
-      } else {
-        console.error('Invalid game id');
       }
     },
     /** Sets up the firebase binding for the players list  */
@@ -44,5 +49,9 @@ export const PlayerModule: Module<PlayerState, State> = {
         }
       }
     ),
+    /** Stores the player id in session in case the page reloads */
+    storePlayerId({}, payload: { playerId: string }) {
+      sessionStorage.setItem('playerId', payload.playerId);
+    },
   },
 };
