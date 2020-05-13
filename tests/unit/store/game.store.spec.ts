@@ -32,7 +32,6 @@ describe('Game Store Module', () => {
       const gameId = Object.keys(games.mocker.getShallowCollection())[0];
       const game = games.mocker.doc(gameId);
       const expectedGame: Game = {
-        currentCard: null,
         currentPlayer: null,
         gameCompleted: false,
         gameStarted: false,
@@ -74,7 +73,6 @@ describe('Game Store Module', () => {
       const state: Partial<GameState> = {
         gameId: 'xyz',
         game: {
-          currentCard: null,
           currentPlayer: null,
           gameCompleted: false,
           gameStarted: false,
@@ -95,7 +93,6 @@ describe('Game Store Module', () => {
       const createGameSuccess = mutations.createGameSuccess;
       const state: GameState = {
         game: {
-          currentCard: null,
           currentPlayer: null,
           gameCompleted: false,
           gameStarted: false,

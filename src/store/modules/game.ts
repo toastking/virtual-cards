@@ -15,7 +15,6 @@ export enum LoadingStatus {
 /** Represents the general state of a card game */
 export interface Game {
   currentPlayer: string | null;
-  currentCard: null;
   gameCompleted: boolean;
   gameStarted: boolean;
 }
@@ -32,7 +31,6 @@ export const GameModule: Module<GameState, State> = {
     gameId: null,
     gameLoadingStatus: LoadingStatus.NOT_STARTED,
     game: {
-      currentCard: null,
       currentPlayer: null,
       gameCompleted: false,
       gameStarted: false,
@@ -48,7 +46,6 @@ export const GameModule: Module<GameState, State> = {
     /** Create a new game object and route to the lobby */
     async createGame({ dispatch }, payload: { hostPlayerName: string }) {
       const dummyGame: Game = {
-        currentCard: null,
         currentPlayer: null,
         gameCompleted: false,
         gameStarted: false,
