@@ -2,9 +2,12 @@ import { Store } from 'vuex-mock-store';
 import { shallowMount, createLocalVue } from '@vue/test-utils';
 import Lobby from '@/views/Lobby.vue';
 import VueRouter from 'vue-router';
+import Vue from 'vue';
 
 describe('Lobby View', () => {
-  const store = new Store({});
+  const store = new Store({
+    state: { game: { game: { gameStarted: false } } },
+  });
 
   const localVue = createLocalVue();
   localVue.use(VueRouter);
@@ -39,5 +42,11 @@ describe('Lobby View', () => {
     expect(store.commit).toHaveBeenCalledWith('createGameSuccess', {
       newGameId: 'xyz',
     });
+  });
+
+  test('routes to the game when the game is started ', () => {
+    shallowMount(Lobby, { mocks, localVue, router });
+    store.state.game.game.gameStarted = true;
+    expect(store.dispatch).toHaveBeenCalledWith('routeToGame');
   });
 });
