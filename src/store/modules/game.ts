@@ -17,6 +17,7 @@ export interface Game {
   currentPlayer: string | null;
   currentCard: null;
   gameCompleted: boolean;
+  gameStarted: boolean;
 }
 
 export interface GameState {
@@ -30,7 +31,12 @@ export const GameModule: Module<GameState, State> = {
   state: () => ({
     gameId: null,
     gameLoadingStatus: LoadingStatus.NOT_STARTED,
-    game: { currentCard: null, currentPlayer: null, gameCompleted: false },
+    game: {
+      currentCard: null,
+      currentPlayer: null,
+      gameCompleted: false,
+      gameStarted: false,
+    },
   }),
   mutations: {
     createGameSuccess(state, payload: { newGameId: string }) {
@@ -45,6 +51,7 @@ export const GameModule: Module<GameState, State> = {
         currentCard: null,
         currentPlayer: null,
         gameCompleted: false,
+        gameStarted: false,
       };
       const newGame = await db.collection('games').add(dummyGame);
       dispatch('joinGame', {
@@ -63,6 +70,15 @@ export const GameModule: Module<GameState, State> = {
       dispatch('addUserPlayer', player);
 
       dispatch('routeToLobby', { newGameId: payload.gameId });
+    },
+    /** Changes the gameStarted boolean so the game is started  */
+    startGame({ state }) {
+      const { gameId } = state;
+      if (gameId) {
+        db.collection('games')
+          .doc(gameId)
+          .update({ gameStarted: true });
+      }
     },
     /** Setup the firebase binding for the game */
     setupGameBinding: firestoreAction(async ({ bindFirestoreRef, state }) => {

@@ -35,6 +35,7 @@ describe('Game Store Module', () => {
         currentCard: null,
         currentPlayer: null,
         gameCompleted: false,
+        gameStarted: false,
       };
       expect(game.mocker.getData()).toEqual(expectedGame);
 
@@ -63,6 +64,29 @@ describe('Game Store Module', () => {
         newGameId: 'xyz',
       });
     });
+
+    test('startGame', async () => {
+      // Test that we update the gameStarted value for the game
+      const startGame = actions.startGame as Function;
+      const firestore = firebaseMock.firestore();
+      firestore.mocker.loadCollection('games', { xyz: { gameStarted: false } });
+
+      const state: Partial<GameState> = {
+        gameId: 'xyz',
+        game: {
+          currentCard: null,
+          currentPlayer: null,
+          gameCompleted: false,
+          gameStarted: false,
+        },
+      };
+      await startGame({ state });
+
+      const game = firestore.mocker
+        .collection('games')
+        .mocker.getShallowCollection().xyz;
+      expect(game).toEqual(expect.objectContaining({ gameStarted: true }));
+    });
   });
 
   describe('mutations', () => {
@@ -70,7 +94,12 @@ describe('Game Store Module', () => {
     test('createGameSuccess adds the gameid', () => {
       const createGameSuccess = mutations.createGameSuccess;
       const state: GameState = {
-        game: { currentCard: null, currentPlayer: null, gameCompleted: false },
+        game: {
+          currentCard: null,
+          currentPlayer: null,
+          gameCompleted: false,
+          gameStarted: false,
+        },
         gameId: null,
         gameLoadingStatus: LoadingStatus.NOT_STARTED,
       };
