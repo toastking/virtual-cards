@@ -51,6 +51,7 @@ export const GameModule: Module<GameState, State> = {
         gameStarted: false,
       };
       const newGame = await db.collection('games').add(dummyGame);
+
       dispatch('joinGame', {
         gameId: newGame.id,
         playerName: payload.hostPlayerName,
@@ -69,8 +70,10 @@ export const GameModule: Module<GameState, State> = {
       dispatch('routeToLobby', { newGameId: payload.gameId });
     },
     /** Changes the gameStarted boolean so the game is started  */
-    startGame({ state }) {
+    startGame({ state, dispatch }) {
       const { gameId } = state;
+
+      dispatch('addDeck');
       if (gameId) {
         db.collection('games')
           .doc(gameId)

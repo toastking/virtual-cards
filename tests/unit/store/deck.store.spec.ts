@@ -1,9 +1,7 @@
-import { exposeMockFirebaseApp } from 'ts-mock-firebase';
-import { DeckModule, Deck, DeckState } from '@/store/modules/deck';
 import { app } from '@/db';
-import { GameState, Game, GameModule } from '@/store/modules/game';
-import store from '@/store';
-import { firebaseAction } from 'vuexfire/dist/packages/vuexfire/src';
+import { DeckModule, DeckState } from '@/store/modules/deck';
+import { GameState } from '@/store/modules/game';
+import { exposeMockFirebaseApp } from 'ts-mock-firebase';
 
 describe('Deck Store Module', () => {
   const firebaseMock = exposeMockFirebaseApp(app);
@@ -31,16 +29,6 @@ describe('Deck Store Module', () => {
         .mocker.getShallowCollection();
 
       expect(Object.values(decks).length).toBe(1);
-    });
-
-    test('setupDeckForGame', async () => {
-      const setupDecksForGame = actions.setupDecksForGame as Function;
-      const dispatch = jest.fn();
-
-      await setupDecksForGame({ rootState, dispatch });
-
-      expect(dispatch).toHaveBeenCalledWith('addDeck');
-      expect(dispatch).toHaveBeenCalledWith('setupDeckBinding');
     });
 
     test('drawCard', async () => {

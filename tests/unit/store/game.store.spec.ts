@@ -38,6 +38,7 @@ describe('Game Store Module', () => {
       };
       expect(game.mocker.getData()).toEqual(expectedGame);
 
+      expect(dispatch).toHaveBeenCalledWith('addDeck');
       expect(dispatch).toHaveBeenCalledWith('joinGame', {
         gameId,
         playerName: 'foo',

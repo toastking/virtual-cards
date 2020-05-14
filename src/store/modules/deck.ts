@@ -22,10 +22,10 @@ export const DeckModule: Module<DeckState, State> = {
     /** Draw a random card from a deck in the game */
     drawCard({ rootState, getters }) {
       // Get the drawn cards for the current deck
-      const availableCards: string[] = getters.cardsStillLeft();
+      const availableCards: string[] = getters.cardsStillLeft;
       const cardIndex = Math.floor(Math.random() * availableCards.length);
       const drawnCard = availableCards[cardIndex];
-      const currentDeck: Deck = getters.currentDeck();
+      const currentDeck: Deck = getters.currentDeck;
       const updatedDrawnCards = currentDeck.drawnCards.concat(drawnCard);
 
       // update the Deck value in firestore
@@ -53,14 +53,6 @@ export const DeckModule: Module<DeckState, State> = {
           .doc(gameId)
           .collection('decks')
           .add(newDeck);
-      }
-    },
-    /** Adds an initial deck and sets up the deck binding to firebase */
-    async setupDecksForGame({ rootState, dispatch }) {
-      const { gameId } = rootState.game;
-      if (gameId) {
-        await dispatch('addDeck');
-        dispatch('setupDeckBinding');
       }
     },
     setupDeckBinding: firestoreAction(({ rootState, bindFirestoreRef }) => {
