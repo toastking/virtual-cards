@@ -2,7 +2,7 @@
   <div>
     <h1 class="title is-1">Lobby</h1>
     <player-list />
-    <b-button id="start-game-button" type="is-success" expanded v-on:click="startGame()"></b-button>
+    <b-button id="start-game-button" type="is-success" expanded v-on:click="startGame()">Start Game</b-button>
   </div>
 </template>
 <script lang="ts">

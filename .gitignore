@@ -24,3 +24,4 @@ firestore.rules
 firebase.json
 firestore.indexes.json
 .firebaserc
+firestore-debug.log

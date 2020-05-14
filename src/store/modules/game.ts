@@ -89,10 +89,10 @@ export const GameModule: Module<GameState, State> = {
     routeToLobby({}, payload: { newGameId: string }) {
       router.push(`lobby/${payload.newGameId}`);
     },
-    routerToGame({ state }) {
+    routeToGame({ state }) {
       const { gameId } = state;
       if (gameId) {
-        router.push(`game/${gameId}`);
+        router.push({ name: 'game', params: { gameId } });
       }
     },
   },
