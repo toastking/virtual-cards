@@ -45,6 +45,7 @@ describe('Player Store Module', () => {
       expect(commit).toHaveBeenCalledWith('updateUserPlayerId', {
         playerId: 'xyz',
       });
+      expect(dispatch).toHaveBeenCalledWith('storePlayerId');
     });
 
     test('storePlayerId', async () => {

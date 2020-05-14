@@ -10,7 +10,7 @@ export default Vue.extend({
   mounted() {
     const playerId = sessionStorage.getItem('playerId');
     if (playerId) {
-      this.$store.commit('updatePlayerId', { playerId });
+      this.$store.commit('updateUserPlayerId', { playerId });
     }
   },
 });

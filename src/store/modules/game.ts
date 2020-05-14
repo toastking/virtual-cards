@@ -70,14 +70,16 @@ export const GameModule: Module<GameState, State> = {
       dispatch('routeToLobby', { newGameId: payload.gameId });
     },
     /** Changes the gameStarted boolean so the game is started  */
-    startGame({ state, dispatch }) {
+    startGame({ state, dispatch, rootState }) {
       const { gameId } = state;
 
       dispatch('addDeck');
       if (gameId) {
+        // set game started to true and set the current player id to the first player
+        const firstPlayerId = rootState.player.players[0].id;
         db.collection('games')
           .doc(gameId)
-          .update({ gameStarted: true });
+          .update({ gameStarted: true, currentPlayer: firstPlayerId });
       }
     },
     /** Setup the firebase binding for the game */

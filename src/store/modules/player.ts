@@ -56,6 +56,7 @@ export const PlayerModule: Module<PlayerState, State> = {
 
       if (newPlayer) {
         commit('updateUserPlayerId', { playerId: newPlayer.id });
+        dispatch('storePlayerId', { playerId: newPlayer.id });
       }
     },
     /** Sets up the firebase binding for the players list  */

@@ -26,5 +26,10 @@ export default new Vuex.Store<State>({
       }, 3000);
     },
   },
+  getters: {
+    isYourTurn(state): boolean {
+      return state.game.game.currentPlayer === state.player.userPlayerId;
+    },
+  },
   modules: { game: GameModule, player: PlayerModule, deck: DeckModule },
 });
