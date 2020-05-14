@@ -20,3 +20,7 @@ yarn-error.log*
 *.sln
 *.sw?
 src/db.ts
+firestore.rules
+firebase.json
+firestore.indexes.json
+.firebaserc
