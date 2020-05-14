@@ -24,7 +24,7 @@ describe('App', () => {
     sessionStorage.setItem('playerId', 'xyz');
     shallowMount(App, { mocks, localVue });
 
-    expect(store.commit).toHaveBeenCalledWith('updatePlayerId', {
+    expect(store.commit).toHaveBeenCalledWith('updateUserPlayerId', {
       playerId: 'xyz',
     });
   });

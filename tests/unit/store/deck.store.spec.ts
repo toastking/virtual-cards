@@ -50,8 +50,8 @@ describe('Deck Store Module', () => {
         decks: [{ drawnCards: [], id: 'deck1' }],
       };
       const getters = {
-        cardsStillLeft: jest.fn().mockReturnValue(['sa']),
-        currentDeck: jest.fn().mockReturnValue(state.decks![0]),
+        cardsStillLeft: ['sa'],
+        currentDeck: state.decks![0],
       };
 
       await drawCard({ state, rootState, getters });

@@ -6,7 +6,7 @@ import {
   Game,
 } from '@/store/modules/game';
 import { exposeMockFirebaseApp } from 'ts-mock-firebase';
-import { Player } from '@/store/modules/player';
+import { Player, PlayerState } from '@/store/modules/player';
 
 describe('Game Store Module', () => {
   const firebaseMock = exposeMockFirebaseApp(app);
@@ -38,7 +38,6 @@ describe('Game Store Module', () => {
       };
       expect(game.mocker.getData()).toEqual(expectedGame);
 
-      expect(dispatch).toHaveBeenCalledWith('addDeck');
       expect(dispatch).toHaveBeenCalledWith('joinGame', {
         gameId,
         playerName: 'foo',
@@ -68,6 +67,7 @@ describe('Game Store Module', () => {
     test('startGame', async () => {
       // Test that we update the gameStarted value for the game
       const startGame = actions.startGame as Function;
+      const dispatch = jest.fn();
       const firestore = firebaseMock.firestore();
       firestore.mocker.loadCollection('games', { xyz: { gameStarted: false } });
 
@@ -79,12 +79,21 @@ describe('Game Store Module', () => {
           gameStarted: false,
         },
       };
-      await startGame({ state });
+      const player: Partial<PlayerState> = {
+        players: [{ name: 'mort', id: 'foo' }],
+      };
+      const rootState = { player };
+
+      await startGame({ state, dispatch, rootState });
 
       const game = firestore.mocker
         .collection('games')
         .mocker.getShallowCollection().xyz;
-      expect(game).toEqual(expect.objectContaining({ gameStarted: true }));
+      expect(game).toEqual(
+        expect.objectContaining({ gameStarted: true, currentPlayer: 'foo' })
+      );
+
+      expect(dispatch).toHaveBeenCalledWith('addDeck');
     });
   });
 
