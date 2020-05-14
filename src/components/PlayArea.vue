@@ -16,7 +16,7 @@ export default Vue.extend({
   computed: {
     ...mapState({
       decks(state: State) {
-        return state.decks.decks;
+        return state.deck.decks;
       },
     }),
   },

@@ -13,6 +13,9 @@ import PlayArea from '@/components/PlayArea.vue';
 import GameButtons from '@/components/GameButtons.vue';
 
 export default Vue.extend({
+  mounted() {
+    this.$store.dispatch('setupDeckBinding');
+  },
   components: { 'play-area': PlayArea, 'game-buttons': GameButtons },
 });
 </script>

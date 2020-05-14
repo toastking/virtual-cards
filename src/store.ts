@@ -3,14 +3,14 @@ import Vuex from 'vuex';
 import { vuexfireMutations } from 'vuexfire';
 import { GameModule, GameState } from './store/modules/game';
 import { PlayerState, PlayerModule } from './store/modules/player';
-import { DeckState } from './store/modules/deck';
+import { DeckState, DeckModule } from './store/modules/deck';
 
 Vue.use(Vuex);
 
 export interface State {
   game: GameState;
   player: PlayerState;
-  decks: DeckState;
+  deck: DeckState;
 }
 
 export default new Vuex.Store<State>({
@@ -26,5 +26,5 @@ export default new Vuex.Store<State>({
       }, 3000);
     },
   },
-  modules: { game: GameModule, player: PlayerModule },
+  modules: { game: GameModule, player: PlayerModule, deck: DeckModule },
 });
