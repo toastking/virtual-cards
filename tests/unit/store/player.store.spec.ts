@@ -1,7 +1,7 @@
 import { app } from '@/db';
 import { PlayerModule, Player, PlayerState } from '@/store/modules/player';
 import { exposeMockFirebaseApp } from 'ts-mock-firebase';
-import { GameState } from '@/store/modules/game';
+import { GameState, Game } from '@/store/modules/game';
 import { firestore } from 'firebase';
 
 describe('Player Store Module', () => {
@@ -53,6 +53,39 @@ describe('Player Store Module', () => {
       await storePlayerId({}, { playerId: 'foo' });
       expect(sessionStorage.setItem).toBeCalledWith('playerId', 'foo');
     });
+
+    test('nextPlayer', async () => {
+      const nextPlayer = actions.nextPlayer as Function;
+
+      const game: Partial<GameState> = {
+        game: {
+          gameCompleted: false,
+          gameStarted: true,
+          currentPlayer: 'id1',
+        },
+        gameId: 'xyz',
+      };
+      const rootState = { game };
+
+      const state: Partial<PlayerState> = {
+        players: [
+          { name: 'hello', id: 'id1' },
+          { name: 'world', id: 'id2' },
+        ],
+      };
+      firebaseMock
+        .firestore()
+        .doc('games/xyz')
+        .set({ currentPlayer: 'id1' });
+
+      await nextPlayer({ state, rootState });
+
+      const updatedGame = await firebaseMock
+        .firestore()
+        .doc('games/xyz')
+        .get();
+      expect(updatedGame.data()!.currentPlayer).toBe('id2');
+    });
   });
 
   describe('mutations', () => {
@@ -61,7 +94,10 @@ describe('Player Store Module', () => {
     test('updateUserPlayerId', () => {
       const updateUserPlayerId = mutations.updateUserPlayerId;
 
-      const state: PlayerState = { players: [], userPlayerId: '' };
+      const state: PlayerState = {
+        players: [],
+        userPlayerId: '',
+      };
 
       updateUserPlayerId(state, { playerId: 'foo' });
       expect(state.userPlayerId).toBe('foo');

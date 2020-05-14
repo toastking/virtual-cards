@@ -2,6 +2,7 @@ import { Module } from 'vuex';
 import { db } from '@/db';
 import { State } from '@/store';
 import { firestoreAction } from 'vuexfire';
+import { Game } from './game';
 
 export interface Player {
   name: string;
@@ -16,13 +17,26 @@ export interface PlayerState {
 
 /** Module to handle player state, like who's in the game and who is the current player. */
 export const PlayerModule: Module<PlayerState, State> = {
-  state: () => ({ currentPlayerId: null, players: [], userPlayerId: '' }),
+  state: () => ({ players: [], userPlayerId: '', currentPlayerIndex: 0 }),
   mutations: {
     updateUserPlayerId(state, payload: { playerId: string }) {
       state.userPlayerId = payload.playerId;
     },
   },
   actions: {
+    /** Update the player id to the next player in the list */
+    async nextPlayer({ state, rootState }) {
+      const currentPlayerId = rootState.game.game.currentPlayer;
+      const currentPlayerIndex = state.players.findIndex(
+        player => player.id === currentPlayerId
+      );
+      const nextIndex = (currentPlayerIndex + 1) % state.players.length;
+      const nextPlayerId = state.players[nextIndex].id;
+
+      // Update the game object
+      const toUpdate: Partial<Game> = { currentPlayer: nextPlayerId };
+      db.doc(`games/${rootState.game.gameId}`).update(toUpdate);
+    },
     /** Add a player to the firebase store */
     async addPlayer({ rootState }, player: Player) {
       const { gameId } = rootState.game;
