@@ -1,7 +1,9 @@
 import { exposeMockFirebaseApp } from 'ts-mock-firebase';
-import { DeckModule } from '@/store/modules/deck';
+import { DeckModule, Deck, DeckState } from '@/store/modules/deck';
 import { app } from '@/db';
-import { GameState } from '@/store/modules/game';
+import { GameState, Game, GameModule } from '@/store/modules/game';
+import store from '@/store';
+import { firebaseAction } from 'vuexfire/dist/packages/vuexfire/src';
 
 describe('Deck Store Module', () => {
   const firebaseMock = exposeMockFirebaseApp(app);
@@ -39,6 +41,42 @@ describe('Deck Store Module', () => {
 
       expect(dispatch).toHaveBeenCalledWith('addDeck');
       expect(dispatch).toHaveBeenCalledWith('setupDeckBinding');
+    });
+
+    test('drawCard', async () => {
+      const drawCard = actions.drawCard as Function;
+
+      //Setup firestore
+      firebaseMock.firestore().mocker.loadCollection('games', {
+        xyz: {},
+      });
+      firebaseMock
+        .firestore()
+        .doc('games/xyz')
+        .collection('decks')
+        .doc('deck1')
+        .set({ drawnCards: [] });
+
+      const state: Partial<DeckState> = {
+        currentDeckIndex: 0,
+        decks: [{ drawnCards: [], id: 'deck1' }],
+      };
+      const getters = {
+        cardsStillLeft: jest.fn().mockReturnValue(['sa']),
+        currentDeck: jest.fn().mockReturnValue(state.decks![0]),
+      };
+
+      await drawCard({ state, rootState, getters });
+
+      const newDeckRef = await firebaseMock
+        .firestore()
+        .doc('games/xyz/decks/deck1')
+        .get();
+
+      const newDeck = newDeckRef.data();
+
+      expect(newDeck!.drawnCards.length).toBe(1);
+      expect(newDeck!.currentCard).toEqual(expect.any(String));
     });
   });
 });
