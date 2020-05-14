@@ -17,6 +17,14 @@ export default new Vuex.Store<State>({
   mutations: {
     ...vuexfireMutations,
   },
-  actions: {},
+  actions: {
+    doTurn({ dispatch }) {
+      // Draw a card, wait a little bit, then go to the next player
+      dispatch('drawCard');
+      setTimeout(() => {
+        dispatch('nextPlayer');
+      }, 3000);
+    },
+  },
   modules: { game: GameModule, player: PlayerModule },
 });
