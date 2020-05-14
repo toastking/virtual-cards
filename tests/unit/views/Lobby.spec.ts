@@ -1,16 +1,18 @@
 import { Store } from 'vuex-mock-store';
-import { shallowMount, createLocalVue } from '@vue/test-utils';
+import { shallowMount, createLocalVue, mount } from '@vue/test-utils';
 import Lobby from '@/views/Lobby.vue';
 import VueRouter from 'vue-router';
-import Vue from 'vue';
+import Buefy from 'buefy';
 
 describe('Lobby View', () => {
   const store = new Store({
-    state: { game: { game: { gameStarted: false } } },
+    state: { game: { game: { gameStarted: false } }, player: { players: [] } },
   });
 
   const localVue = createLocalVue();
   localVue.use(VueRouter);
+  localVue.use(Buefy);
+
   const router = new VueRouter({
     routes: [
       {
@@ -48,5 +50,11 @@ describe('Lobby View', () => {
     shallowMount(Lobby, { mocks, localVue, router });
     store.state.game.game.gameStarted = true;
     expect(store.dispatch).toHaveBeenCalledWith('routeToGame');
+  });
+
+  test('starts the game when Start Game is clicked', () => {
+    const wrapper = mount(Lobby, { mocks, localVue, router });
+    wrapper.find('#start-game-button').trigger('click');
+    expect(store.dispatch).toHaveBeenCalledWith('startGame');
   });
 });
