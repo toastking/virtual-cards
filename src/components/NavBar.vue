@@ -1,9 +1,11 @@
 <template>
-  <nav class="navbar is-primary" role="navigation" aria-label="main navigation">
-    <div class="navbar-brand">
-      <a class="navbar-item">Zooted</a>
-    </div>
-  </nav>
+  <b-navbar shadow="true" type="is-light">
+    <template slot="brand">
+      <b-navbar-item tag="router-link" :to="{ path: '/' }">
+        <img src="../assets/logo.png" alt="logo" />
+      </b-navbar-item>
+    </template>
+  </b-navbar>
 </template>
 
 <script lang="ts">

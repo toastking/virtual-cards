@@ -19,7 +19,7 @@ export default Vue.extend({
   created() {
     this.turnHandler = throttle(() => {
       this.doTurn();
-    }, 3000);
+    }, 1000);
   },
   computed: { ...mapGetters(['isYourTurn', 'turnIsLoading', 'gameOver']) },
   methods: { ...mapActions(['doTurn']), turnHandler() {} },

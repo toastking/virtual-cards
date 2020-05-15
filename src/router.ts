@@ -9,7 +9,7 @@ Vue.use(Router);
 export default new Router({
   routes: [
     // Have a route to prefill the gameid
-    { path: '/', redirect: '/start' },
+    { path: '/', redirect: { name: 'start' } },
     {
       path: '/start/:gameid?',
       name: 'start',
