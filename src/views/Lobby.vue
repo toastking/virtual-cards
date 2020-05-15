@@ -1,6 +1,16 @@
 <template>
   <section class="section">
     <div class="container">
+      <section class="hero is-info">
+        <div class="hero-body">
+          <div class="container">
+            <span>Share! {{ shareUrl }}</span>
+            <b-button type="is-text" v-clipboard:copy="shareUrl">
+              <font-awesome-icon :icon="['far', 'copy']" />
+            </b-button>
+          </div>
+        </div>
+      </section>
       <h1 class="title is-1">Lobby</h1>
       <player-list />
       <b-button
@@ -8,7 +18,8 @@
         type="is-success is-large"
         expanded
         v-on:click="startGame()"
-      >Start Game</b-button>
+        >Start Game</b-button
+      >
     </div>
   </section>
 </template>
@@ -28,11 +39,16 @@ export default Vue.extend({
     this.$store.dispatch('setupGameBinding');
     this.$store.dispatch('setupPlayerBinding');
   },
-  computed: mapState({
-    gameStarted(state: State) {
-      return state.game.game.gameStarted;
+  computed: {
+    ...mapState({
+      gameStarted(state: State) {
+        return state.game.game.gameStarted;
+      },
+    }),
+    shareUrl() {
+      return `${window.location.hostname}/start/${this.$route.params.gameid}`;
     },
-  }),
+  },
   methods: { ...mapActions(['startGame']) },
   watch: {
     gameStarted(newGameStarted) {
