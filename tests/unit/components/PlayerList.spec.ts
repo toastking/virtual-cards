@@ -1,10 +1,9 @@
 import PlayerList from '@/components/PlayerList.vue';
-import { shallowMount, createLocalVue, mount } from '@vue/test-utils';
-import { Store } from 'vuex-mock-store';
-import Buefy from 'buefy';
-import { PlayerState, Player } from '@/store/modules/player';
 import { Game, GameState } from '@/store/modules/game';
-import { firestore } from 'firebase';
+import { Player, PlayerState } from '@/store/modules/player';
+import { createLocalVue, shallowMount } from '@vue/test-utils';
+import Buefy from 'buefy';
+import { Store } from 'vuex-mock-store';
 
 describe('PlayerList', () => {
   const player1: Player = { name: 'foo', id: 'currentId' };

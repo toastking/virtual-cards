@@ -5,7 +5,7 @@
       <li class="list-item player-card" v-for="player in players" :key="player.id">
         <span class="player-info">
           <span class="player-name is-size-3">{{ player.name }}</span>
-          <span v-if="isTurn(player)" class="tag is-success">Your Turn!</span>
+          <span v-if="isTurn(player)" class="turn-tag tag is-success is-medium">Your Turn!</span>
         </span>
       </li>
     </ol>
@@ -37,5 +37,10 @@ export default Vue.extend({
 .player-info {
   display: flex;
   align-items: center;
+}
+
+.turn-tag {
+  margin-left: auto;
+  margin-right: 0;
 }
 </style>
