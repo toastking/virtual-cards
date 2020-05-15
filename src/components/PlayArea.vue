@@ -1,6 +1,6 @@
 <template>
   <section>
-    <div class="playing-card-container container">
+    <div class="playing-card-container container box">
       <div v-for="deck of decks" :key="deck.id">
         <vue-playing-card
           v-if="!!deck.currentCard"

@@ -1,5 +1,5 @@
 <template>
-  <div v-if="isYourTurn">
+  <div v-if="isYourTurn" class="button-container">
     <b-button
       class="is-large is-primary"
       expanded
@@ -24,3 +24,9 @@ export default Vue.extend({
   methods: { ...mapActions(['doTurn']), turnHandler() {} },
 });
 </script>
+
+<style scoped>
+.button-container {
+  padding: 1em;
+}
+</style>
