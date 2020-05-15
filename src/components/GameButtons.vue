@@ -1,6 +1,7 @@
 <template>
-  <div v-if="isYourTurn" class="button-container">
+  <div v-if="isYourTurn && !gameOver" class="button-container">
     <b-button
+      id="draw-card-button"
       class="is-large is-primary"
       expanded
       :loading="turnIsLoading"
@@ -20,7 +21,7 @@ export default Vue.extend({
       this.doTurn();
     }, 3000);
   },
-  computed: { ...mapGetters(['isYourTurn', 'turnIsLoading']) },
+  computed: { ...mapGetters(['isYourTurn', 'turnIsLoading', 'gameOver']) },
   methods: { ...mapActions(['doTurn']), turnHandler() {} },
 });
 </script>

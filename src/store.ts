@@ -29,6 +29,9 @@ export default new Vuex.Store<State>({
     },
   },
   getters: {
+    gameOver(state) {
+      return state.game.game.gameCompleted;
+    },
     isYourTurn(state): boolean {
       return state.game.game.currentPlayer === state.player.userPlayerId;
     },
