@@ -4,8 +4,18 @@ import { State } from '@/store';
 import { firestoreAction } from 'vuexfire';
 import { Game } from './game';
 
+export enum Avatar {
+  NONE,
+  ALPACA,
+  BUFALLO,
+  GIRAFFE,
+  OTTER,
+  SHEEP,
+}
+
 export interface Player {
   name: string;
+  avatar: Avatar;
   id?: string;
 }
 

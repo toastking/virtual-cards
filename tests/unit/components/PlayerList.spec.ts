@@ -1,13 +1,13 @@
 import PlayerList from '@/components/PlayerList.vue';
 import { Game, GameState } from '@/store/modules/game';
-import { Player, PlayerState } from '@/store/modules/player';
+import { Player, PlayerState, Avatar } from '@/store/modules/player';
 import { createLocalVue, shallowMount } from '@vue/test-utils';
 import Buefy from 'buefy';
 import { Store } from 'vuex-mock-store';
 
 describe('PlayerList', () => {
-  const player1: Player = { name: 'foo', id: 'currentId' };
-  const player2: Player = { name: 'bar' };
+  const player1: Player = { name: 'foo', id: 'currentId', avatar: Avatar.NONE };
+  const player2: Player = { name: 'bar', avatar: Avatar.NONE };
   const playerState: Partial<PlayerState> = {
     players: [player1, player2],
     userPlayerId: 'currentId',

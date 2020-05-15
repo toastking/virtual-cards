@@ -25,3 +25,5 @@ firebase.json
 firestore.indexes.json
 .firebaserc
 firestore-debug.log
+.firebase/*
+firebase-debug.log

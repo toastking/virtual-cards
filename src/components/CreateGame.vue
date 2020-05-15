@@ -4,13 +4,18 @@
       <b-field label="Player Name">
         <b-input v-model="playerName"></b-input>
       </b-field>
+      <b-field label="Avatar">
+        <b-select v-model="avatar" placeholder="Select an avatar" expanded>
+          <option v-for="(value,key) in avatars" :value="value" :key="key">{{ key }}</option>
+        </b-select>
+      </b-field>
       <b-field label="Game ID">
         <b-input id="game-field" v-model="gameId"></b-input>
       </b-field>
       <b-button
         id="join-game-button"
         type="is-primary"
-        v-on:click="joinGame({ playerName, gameId })"
+        v-on:click="joinGame({ playerName,avatar, gameId })"
       >Join Game</b-button>
     </b-tab-item>
 
@@ -18,10 +23,15 @@
       <b-field label="Player Name">
         <b-input v-model="playerName"></b-input>
       </b-field>
+      <b-field label="Avatar">
+        <b-select v-model="avatar" placeholder="Select an avatar" expanded>
+          <option v-for="(value,key) in avatars" :value="value" :key="key">{{ key }}</option>
+        </b-select>
+      </b-field>
       <b-button
         id="create-game-button"
         type="is-primary"
-        v-on:click="createGame({ hostPlayerName: playerName })"
+        v-on:click="createGame({ hostPlayerName: playerName,avatar })"
       >Create Game</b-button>
     </b-tab-item>
   </b-tabs>
@@ -30,9 +40,22 @@
 <script lang="ts">
 import Vue from 'vue';
 import { mapActions } from 'vuex';
+import { Avatar } from '@/store/modules/player';
 
 export default Vue.extend({
-  data: () => ({ playerName: '', gameId: '' }),
+  data: () => ({
+    playerName: '',
+    gameId: '',
+    avatars: {
+      None: Avatar.NONE,
+      Alpaca: Avatar.ALPACA,
+      Buffallo: Avatar.BUFALLO,
+      Giraffe: Avatar.GIRAFFE,
+      Otter: Avatar.OTTER,
+      Sheep: Avatar.SHEEP,
+    },
+    avatar: Avatar.NONE,
+  }),
   created() {
     // If we have a gameid, fill that in
     const gameId = this.$route.params.gameid;

@@ -6,7 +6,7 @@
           <div class="container">
             <span>Share! {{ shareUrl }}</span>
             <b-button type="is-text" v-clipboard:copy="shareUrl">
-              <font-awesome-icon :icon="['far', 'copy']" />
+              <font-awesome-icon :icon="['far', 'copy']" />Copy
             </b-button>
           </div>
         </div>
@@ -18,8 +18,7 @@
         type="is-success is-large"
         expanded
         v-on:click="startGame()"
-        >Start Game</b-button
-      >
+      >Start Game</b-button>
     </div>
   </section>
 </template>
@@ -46,7 +45,7 @@ export default Vue.extend({
       },
     }),
     shareUrl() {
-      return `${window.location.hostname}/start/${this.$route.params.gameid}`;
+      return `${window.location.hostname}/#/start/${this.$route.params.gameid}`;
     },
   },
   methods: { ...mapActions(['startGame']) },

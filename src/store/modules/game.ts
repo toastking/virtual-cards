@@ -3,7 +3,7 @@ import router from '@/router';
 import { State } from '@/store';
 import { Module } from 'vuex';
 import { firestoreAction } from 'vuexfire';
-import { Player } from './player';
+import { Player, Avatar } from './player';
 
 export enum LoadingStatus {
   NOT_STARTED,
@@ -53,7 +53,10 @@ export const GameModule: Module<GameState, State> = {
   },
   actions: {
     /** Create a new game object and route to the lobby */
-    async createGame({ dispatch }, payload: { hostPlayerName: string }) {
+    async createGame(
+      { dispatch },
+      payload: { hostPlayerName: string; avatar: Avatar }
+    ) {
       const dummyGame: Game = {
         currentPlayer: null,
         gameCompleted: false,
@@ -64,16 +67,20 @@ export const GameModule: Module<GameState, State> = {
       dispatch('joinGame', {
         gameId: newGame.id,
         playerName: payload.hostPlayerName,
+        avatar: payload.avatar,
       });
     },
     /** Joins a game by setting the gameId and creating a player with the player info */
     joinGame(
       { dispatch, commit },
-      payload: { gameId: string; playerName: string }
+      payload: { gameId: string; playerName: string; avatar: Avatar }
     ) {
       commit('createGameSuccess', { newGameId: payload.gameId });
 
-      const player: Player = { name: payload.playerName };
+      const player: Player = {
+        name: payload.playerName,
+        avatar: payload.avatar,
+      };
       dispatch('addUserPlayer', player);
 
       dispatch('routeToLobby', { newGameId: payload.gameId });

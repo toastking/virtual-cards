@@ -6,7 +6,7 @@ import {
   Game,
 } from '@/store/modules/game';
 import { exposeMockFirebaseApp } from 'ts-mock-firebase';
-import { Player, PlayerState } from '@/store/modules/player';
+import { Player, PlayerState, Avatar } from '@/store/modules/player';
 
 describe('Game Store Module', () => {
   const firebaseMock = exposeMockFirebaseApp(app);
@@ -56,7 +56,7 @@ describe('Game Store Module', () => {
       expect(commit).toHaveBeenCalledWith('createGameSuccess', {
         newGameId: 'xyz',
       });
-      const expectedPlayer: Player = { name: 'foo' };
+      const expectedPlayer: Player = { name: 'foo', avatar: Avatar.NONE };
       expect(dispatch).toHaveBeenCalledWith('addUserPlayer', expectedPlayer);
 
       expect(dispatch).toHaveBeenCalledWith('routeToLobby', {
@@ -80,7 +80,7 @@ describe('Game Store Module', () => {
         },
       };
       const player: Partial<PlayerState> = {
-        players: [{ name: 'mort', id: 'foo' }],
+        players: [{ name: 'mort', id: 'foo', avatar: Avatar.NONE }],
       };
       const rootState = { player };
 

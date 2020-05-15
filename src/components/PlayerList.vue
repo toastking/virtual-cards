@@ -4,6 +4,7 @@
     <ol class="list">
       <li class="list-item player-card" v-for="player in players" :key="player.id">
         <span class="player-info">
+          <avatar :avatar="player.avatar" />
           <span class="player-name is-size-3">{{ player.name }}</span>
           <span v-if="isTurn(player)" class="turn-tag tag is-success is-medium">Your Turn!</span>
         </span>
@@ -14,10 +15,12 @@
 
 <script lang="ts">
 import Vue from 'vue';
+import Avatar from '@/components/Avatar.vue';
 import { mapState, mapGetters } from 'vuex';
 import { State } from '@/store';
 import { GameModule } from '../store/modules/game';
 import { PlayerState, Player } from '@/store/modules/player';
+
 export default Vue.extend({
   computed: mapState({
     players(state: State) {
@@ -30,6 +33,7 @@ export default Vue.extend({
     },
     ...mapGetters(['isYourTurn']),
   },
+  components: { avatar: Avatar },
 });
 </script>
 

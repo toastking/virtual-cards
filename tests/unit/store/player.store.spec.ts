@@ -1,5 +1,10 @@
 import { app } from '@/db';
-import { PlayerModule, Player, PlayerState } from '@/store/modules/player';
+import {
+  PlayerModule,
+  Player,
+  PlayerState,
+  Avatar,
+} from '@/store/modules/player';
 import { exposeMockFirebaseApp } from 'ts-mock-firebase';
 import { GameState, Game } from '@/store/modules/game';
 import { firestore } from 'firebase';
@@ -19,7 +24,7 @@ describe('Player Store Module', () => {
   describe('actions', () => {
     test('addPlayer', async () => {
       const firestoreMock = firebaseMock.firestore().mocker;
-      const player: Player = { name: 'foo' };
+      const player: Player = { name: 'foo', avatar: Avatar.NONE };
       const gameState: Partial<GameState> = { gameId: 'xyz' };
       const rootState = { game: gameState };
       const addPlayer = actions.addPlayer as Function;
@@ -37,7 +42,7 @@ describe('Player Store Module', () => {
       const dispatch = jest
         .fn()
         .mockReturnValue(Promise.resolve({ id: 'xyz' }));
-      const mockPlayer: Player = { name: 'foo' };
+      const mockPlayer: Player = { name: 'foo', avatar: Avatar.NONE };
 
       await addUserPlayer({ commit, dispatch }, mockPlayer);
 
@@ -72,8 +77,8 @@ describe('Player Store Module', () => {
 
       const state: Partial<PlayerState> = {
         players: [
-          { name: 'hello', id: 'id1' },
-          { name: 'world', id: 'id2' },
+          { name: 'hello', id: 'id1', avatar: Avatar.NONE },
+          { name: 'world', id: 'id2', avatar: Avatar.NONE },
         ],
       };
       firebaseMock
