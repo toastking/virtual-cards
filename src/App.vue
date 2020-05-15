@@ -1,11 +1,14 @@
 <template>
   <main id="app">
+    <navbar />
     <router-view />
   </main>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
+import NavBar from '@/components/NavBar.vue';
+
 export default Vue.extend({
   mounted() {
     const playerId = sessionStorage.getItem('playerId');
@@ -13,6 +16,7 @@ export default Vue.extend({
       this.$store.commit('updateUserPlayerId', { playerId });
     }
   },
+  components: { navbar: NavBar },
 });
 </script>
 
