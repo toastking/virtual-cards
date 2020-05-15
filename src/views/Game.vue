@@ -1,12 +1,15 @@
 <template>
-  <div class="game-container container is-fluid">
-    <div class="columns">
-      <div class="column is-three-quarters">
-        <play-area></play-area>
-        <game-buttons></game-buttons>
-      </div>
-      <div class="column">
-        <player-list></player-list>
+  <div class="container">
+    <game-notification />
+    <div class="game-container container is-fluid">
+      <div class="columns">
+        <div class="column is-three-quarters">
+          <play-area></play-area>
+          <game-buttons></game-buttons>
+        </div>
+        <div class="column">
+          <player-list></player-list>
+        </div>
       </div>
     </div>
   </div>
@@ -17,6 +20,7 @@ import Vue from 'vue';
 import PlayArea from '@/components/PlayArea.vue';
 import GameButtons from '@/components/GameButtons.vue';
 import PlayerList from '@/components/PlayerList.vue';
+import GameNotification from '@/components/GameNotification.vue';
 import { mapActions } from 'vuex';
 
 export default Vue.extend({
@@ -40,6 +44,7 @@ export default Vue.extend({
     'play-area': PlayArea,
     'game-buttons': GameButtons,
     'player-list': PlayerList,
+    'game-notification': GameNotification,
   },
 });
 </script>
