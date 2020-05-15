@@ -66,5 +66,45 @@ describe('Deck Store Module', () => {
       expect(newDeck!.drawnCards.length).toBe(1);
       expect(newDeck!.currentCard).toEqual(expect.any(String));
     });
+
+    test('drawCard changes the game to ended', async () => {
+      const drawCard = actions.drawCard as Function;
+
+      //Setup firestore
+      firebaseMock.firestore().mocker.loadCollection('games', {
+        xyz: {},
+      });
+      firebaseMock
+        .firestore()
+        .doc('games/xyz')
+        .set({ gameCompleted: false });
+
+      firebaseMock
+        .firestore()
+        .doc('games/xyz')
+        .collection('decks')
+        .doc('deck1')
+        .set({ drawnCards: [] });
+
+      const state: Partial<DeckState> = {
+        currentDeckIndex: 0,
+        decks: [{ drawnCards: new Array(51), id: 'deck1' }],
+      };
+      const getters = {
+        cardsStillLeft: ['sa'],
+        currentDeck: state.decks![0],
+      };
+
+      await drawCard({ state, rootState, getters });
+
+      const gameRef = await firebaseMock
+        .firestore()
+        .doc('games/xyz')
+        .get();
+
+      const updatedGame = gameRef.data();
+
+      expect(updatedGame!.gameCompleted).toBe(true);
+    });
   });
 });

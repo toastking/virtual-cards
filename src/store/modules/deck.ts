@@ -2,6 +2,7 @@ import { Module } from 'vuex';
 import { State } from '@/store';
 import { firestoreAction } from 'vuexfire';
 import { db } from '@/db';
+import { Game } from './game';
 
 export interface Deck {
   drawnCards: string[];
@@ -31,16 +32,26 @@ export const DeckModule: Module<DeckState, State> = {
       // update the Deck value in firestore
       const { gameId } = rootState.game;
       if (gameId) {
-        const fieldsToUpdate: Partial<Deck> = {
-          currentCard: drawnCard,
-          drawnCards: updatedDrawnCards,
-        };
-        return db
-          .collection('games')
-          .doc(gameId)
-          .collection('decks')
-          .doc(currentDeck.id)
-          .update(fieldsToUpdate);
+        // Check if the game is over
+        const gameFinished = updatedDrawnCards.length === 52;
+        if (gameFinished) {
+          const updatedGame: Partial<Game> = { gameCompleted: true };
+          return db
+            .collection('games')
+            .doc(gameId)
+            .update(updatedGame);
+        } else {
+          const fieldsToUpdate: Partial<Deck> = {
+            currentCard: drawnCard,
+            drawnCards: updatedDrawnCards,
+          };
+          return db
+            .collection('games')
+            .doc(gameId)
+            .collection('decks')
+            .doc(currentDeck.id)
+            .update(fieldsToUpdate);
+        }
       }
     },
     /** Add a deck to firebase */

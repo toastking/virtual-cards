@@ -3,6 +3,8 @@ import { shallowMount, createLocalVue, mount } from '@vue/test-utils';
 import { Store } from 'vuex-mock-store';
 import Buefy from 'buefy';
 import { PlayerState, Player } from '@/store/modules/player';
+import { Game, GameState } from '@/store/modules/game';
+import { firestore } from 'firebase';
 
 describe('PlayerList', () => {
   const player1: Player = { name: 'foo', id: 'currentId' };
@@ -11,7 +13,13 @@ describe('PlayerList', () => {
     players: [player1, player2],
     userPlayerId: 'currentId',
   };
-  const store = new Store({ state: { player: playerState } });
+  const gameDoc: Game = {
+    gameCompleted: false,
+    currentPlayer: '',
+    gameStarted: true,
+  };
+  const game: Partial<GameState> = { game: gameDoc };
+  const store = new Store({ state: { player: playerState, game } });
   // add other mocks here so they are accessible in every component
   const mocks = {
     $store: store,
@@ -32,15 +40,12 @@ describe('PlayerList', () => {
     expect(playerNames.at(1).text()).toBe('bar');
   });
 
-  test('hightlights the users player card', () => {
+  test('shows a tag for the current player turn', () => {
+    store.state.game.game!.currentPlayer = 'currentId';
     const wrapper = shallowMount(PlayerList, { mocks, localVue });
-    const expectedHighlightedElement = wrapper
-      .findAll('.player-card')
-      .filter(elem => elem.find('.player-name').text() === 'foo')
-      .at(0);
+    const firstPlayer = wrapper.findAll('.player-info').at(0);
+    const tag = firstPlayer.find('.tag');
 
-    expect(expectedHighlightedElement.classes()).toContain(
-      'has-background-light'
-    );
+    expect(tag.exists()).toBe(true);
   });
 });
