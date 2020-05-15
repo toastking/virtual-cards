@@ -23,6 +23,8 @@ export interface GameState {
   gameId: string | null;
   gameLoadingStatus: LoadingStatus;
   game: Game;
+  // Loading for the request for the turn
+  turnLoadingState: LoadingStatus;
 }
 
 /** Module to handle game state. This is things like the game ID and the completion state. */
@@ -30,6 +32,7 @@ export const GameModule: Module<GameState, State> = {
   state: () => ({
     gameId: null,
     gameLoadingStatus: LoadingStatus.NOT_STARTED,
+    turnLoadingState: LoadingStatus.OK,
     game: {
       currentPlayer: null,
       gameCompleted: false,
@@ -40,6 +43,12 @@ export const GameModule: Module<GameState, State> = {
     createGameSuccess(state, payload: { newGameId: string }) {
       state.gameId = payload.newGameId;
       state.gameLoadingStatus = LoadingStatus.OK;
+    },
+    turnRequestStarted(state) {
+      state.turnLoadingState = LoadingStatus.LOADING;
+    },
+    turnRequestDone(state) {
+      state.turnLoadingState = LoadingStatus.OK;
     },
   },
   actions: {

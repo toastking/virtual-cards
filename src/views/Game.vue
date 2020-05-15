@@ -1,11 +1,13 @@
 <template>
-  <div class="columns">
-    <div class="column is-three-quarters">
-      <play-area></play-area>
-      <game-buttons></game-buttons>
-    </div>
-    <div class="column">
-      <player-list></player-list>
+  <div class="game-container container is-fluid">
+    <div class="columns">
+      <div class="column is-three-quarters">
+        <play-area></play-area>
+        <game-buttons></game-buttons>
+      </div>
+      <div class="column">
+        <player-list></player-list>
+      </div>
     </div>
   </div>
 </template>
@@ -41,3 +43,9 @@ export default Vue.extend({
   },
 });
 </script>
+
+<style scoped>
+.game-container {
+  padding: 1em;
+}
+</style>

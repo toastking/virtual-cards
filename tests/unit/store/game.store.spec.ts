@@ -109,6 +109,7 @@ describe('Game Store Module', () => {
         },
         gameId: null,
         gameLoadingStatus: LoadingStatus.NOT_STARTED,
+        turnLoadingState: LoadingStatus.OK,
       };
       createGameSuccess(state, { newGameId: 'foo' });
       expect(state.gameId).toBe('foo');

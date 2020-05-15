@@ -1,18 +1,14 @@
 <template>
   <section>
     <h2 class="title is-2">Players</h2>
-    <div
-      class="player-card card"
-      v-for="player in players"
-      :key="player.id"
-      v-bind:class="{ 'has-background-light': isUserPlayer(player) }"
-    >
-      <div class="card-content">
-        <span class="player-name is-size-3">{{ player.name }}</span>
-        <span v-if="isUserPlayer(player)" class="tag is-medium is-info">You</span>
-        <span v-if="isTurn(player)" class="tag is-medium is-success">Your Turn!</span>
-      </div>
-    </div>
+    <ol class="list">
+      <li class="list-item player-card" v-for="player in players" :key="player.id">
+        <span class="player-info">
+          <span class="player-name is-size-3">{{ player.name }}</span>
+          <span v-if="isTurn(player)" class="tag is-success">Your Turn!</span>
+        </span>
+      </li>
+    </ol>
   </section>
 </template>
 
@@ -29,9 +25,6 @@ export default Vue.extend({
     },
   }),
   methods: {
-    isUserPlayer(player: Player) {
-      return player.id === this.$store.state.player.userPlayerId;
-    },
     isTurn(player: Player) {
       return player.id === this.$store.state.game.game.currentPlayer;
     },
@@ -39,3 +32,10 @@ export default Vue.extend({
   },
 });
 </script>
+
+<style scoped>
+.player-info {
+  display: flex;
+  align-items: center;
+}
+</style>
