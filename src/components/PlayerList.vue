@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <div class="box has-background-white-ter">
     <h2 class="title is-2">Players</h2>
     <ol class="list">
       <li class="list-item player-card" v-for="player in players" :key="player.id">
@@ -10,7 +10,7 @@
         </span>
       </li>
     </ol>
-  </section>
+  </div>
 </template>
 
 <script lang="ts">
