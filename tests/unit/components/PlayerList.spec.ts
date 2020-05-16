@@ -1,7 +1,7 @@
 import PlayerList from '@/components/PlayerList.vue';
 import { Game, GameState } from '@/store/modules/game';
 import { Player, PlayerState, Avatar } from '@/store/modules/player';
-import { createLocalVue, shallowMount } from '@vue/test-utils';
+import { createLocalVue, shallowMount, mount } from '@vue/test-utils';
 import Buefy from 'buefy';
 import { Store } from 'vuex-mock-store';
 
@@ -32,11 +32,8 @@ describe('PlayerList', () => {
   });
 
   test('renders the list of players from the store', () => {
-    const wrapper = shallowMount(PlayerList, { mocks, localVue });
-    const playerNames = wrapper.findAll('.player-name');
-
-    expect(playerNames.at(0).text()).toBe('foo');
-    expect(playerNames.at(1).text()).toBe('bar');
+    const wrapper = mount(PlayerList, { mocks, localVue });
+    expect(wrapper.element).toMatchSnapshot();
   });
 
   test('shows a tag for the current player turn', () => {

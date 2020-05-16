@@ -3,6 +3,7 @@ import { shallowMount, createLocalVue, mount } from '@vue/test-utils';
 import Lobby from '@/views/Lobby.vue';
 import VueRouter from 'vue-router';
 import Buefy from 'buefy';
+import VueClipboard from 'vue-clipboard2';
 
 describe('Lobby View', () => {
   const store = new Store({
@@ -12,6 +13,7 @@ describe('Lobby View', () => {
   const localVue = createLocalVue();
   localVue.use(VueRouter);
   localVue.use(Buefy);
+  localVue.use(VueClipboard);
 
   const router = new VueRouter({
     routes: [
@@ -30,6 +32,11 @@ describe('Lobby View', () => {
 
   afterEach(() => {
     store.reset();
+  });
+
+  test('renders the lobby', () => {
+    const wrapper = shallowMount(Lobby, { mocks, localVue, router });
+    expect(wrapper.element).toMatchSnapshot();
   });
 
   test('dispatches actions to bind the state on load', () => {

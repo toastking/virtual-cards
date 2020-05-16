@@ -1,0 +1,64 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PlayerList renders the list of players from the store 1`] = `
+<div
+  class="box has-background-white-ter"
+>
+  <h2
+    class="title is-2"
+  >
+    Players
+  </h2>
+   
+  <ol
+    class="list"
+  >
+    <li
+      class="list-item player-card"
+    >
+      <span
+        class="player-info"
+      >
+        <figure
+          class="image is-48x48"
+        >
+          <img
+            src="../assets/logo.png"
+          />
+        </figure>
+         
+        <span
+          class="player-name is-size-3"
+        >
+          foo
+        </span>
+         
+        <!---->
+      </span>
+    </li>
+    <li
+      class="list-item player-card"
+    >
+      <span
+        class="player-info"
+      >
+        <figure
+          class="image is-48x48"
+        >
+          <img
+            src="../assets/logo.png"
+          />
+        </figure>
+         
+        <span
+          class="player-name is-size-3"
+        >
+          bar
+        </span>
+         
+        <!---->
+      </span>
+    </li>
+  </ol>
+</div>
+`;

@@ -50,7 +50,7 @@ describe('Game Store Module', () => {
       const commit = jest.fn();
       await joinGame(
         { dispatch, commit },
-        { gameId: 'xyz', playerName: 'foo' }
+        { gameId: 'xyz', playerName: 'foo', avatar: Avatar.NONE }
       );
 
       expect(commit).toHaveBeenCalledWith('createGameSuccess', {

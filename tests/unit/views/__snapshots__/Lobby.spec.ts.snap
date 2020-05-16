@@ -1,0 +1,54 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Lobby View renders the lobby 1`] = `
+<section
+  class="section"
+>
+  <h1
+    class="title is-1"
+  >
+    Lobby
+  </h1>
+   
+  <div
+    class="container has-background-info has-text-white columns is-vcentered"
+  >
+    <div
+      class="share-text column is-three-quarters"
+    >
+      Share! http://localhost/#/start/undefined
+    </div>
+     
+    <div
+      class="column"
+    >
+      <b-button-stub
+        iconleft="copy"
+        inverted="true"
+        nativetype="button"
+        outlined="true"
+        tag="button"
+        type="is-info"
+      >
+        Copy
+      </b-button-stub>
+    </div>
+  </div>
+   
+  <div
+    class="container"
+  >
+    <player-list-stub />
+     
+    <b-button-stub
+      expanded="true"
+      id="start-game-button"
+      nativetype="button"
+      tag="button"
+      type="is-success is-large"
+    >
+      Start Game
+    </b-button-stub>
+  </div>
+</section>
+`;
