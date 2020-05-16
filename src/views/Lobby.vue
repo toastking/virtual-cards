@@ -45,7 +45,7 @@ export default Vue.extend({
       },
     }),
     shareUrl() {
-      return `${window.location.hostname}/#/start/${this.$route.params.gameid}`;
+      return `${window.location.protocol}//${window.location.hostname}/#/start/${this.$route.params.gameid}`;
     },
   },
   methods: { ...mapActions(['startGame']) },
