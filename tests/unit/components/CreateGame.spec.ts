@@ -4,6 +4,7 @@ import Buefy from 'buefy';
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import { Store } from 'vuex-mock-store';
+import { Avatar } from '@/store/modules/player';
 
 describe('CreateGame Component', () => {
   const store = new Store({});
@@ -30,6 +31,7 @@ describe('CreateGame Component', () => {
     component.find('#create-game-button').trigger('click');
     expect(store.dispatch).toHaveBeenCalledWith('createGame', {
       hostPlayerName: 'hello',
+      avatar: Avatar.NONE,
     });
   });
 
@@ -40,6 +42,7 @@ describe('CreateGame Component', () => {
     expect(store.dispatch).toHaveBeenCalledWith('joinGame', {
       playerName: 'hello',
       gameId: 'xyz',
+      avatar: Avatar.NONE,
     });
   });
 
@@ -48,6 +51,8 @@ describe('CreateGame Component', () => {
     const wrapper = mount(CreateGame, { mocks, localVue, router });
     await Vue.nextTick();
     expect(wrapper.vm.$data.gameId).toBe('foo');
-    expect(wrapper.find('#game-field').text()).toBe('foo');
+    expect(
+      (wrapper.find('#game-field').element as HTMLInputElement).value
+    ).toBe('foo');
   });
 });

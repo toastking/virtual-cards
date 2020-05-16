@@ -1,17 +1,20 @@
 <template>
   <section class="section">
+    <h1 class="title is-1">Lobby</h1>
+    <div class="container has-background-info has-text-white columns is-vcentered">
+      <div class="share-text column is-three-quarters">Share! {{ shareUrl }}</div>
+      <div class="column">
+        <b-button
+          type="is-info"
+          icon-left="copy"
+          v-clipboard:copy="shareUrl"
+          v-on:click="showCopySnackbar()"
+          outlined
+          inverted
+        >Copy</b-button>
+      </div>
+    </div>
     <div class="container">
-      <section class="hero is-info">
-        <div class="hero-body">
-          <div class="container">
-            <span>Share! {{ shareUrl }}</span>
-            <b-button type="is-text" v-clipboard:copy="shareUrl">
-              <font-awesome-icon :icon="['far', 'copy']" />Copy
-            </b-button>
-          </div>
-        </div>
-      </section>
-      <h1 class="title is-1">Lobby</h1>
       <player-list />
       <b-button
         id="start-game-button"
@@ -48,7 +51,16 @@ export default Vue.extend({
       return `${window.location.protocol}//${window.location.hostname}/#/start/${this.$route.params.gameid}`;
     },
   },
-  methods: { ...mapActions(['startGame']) },
+  methods: {
+    ...mapActions(['startGame']),
+    showCopySnackbar() {
+      this.$buefy.snackbar.open({
+        message: 'Lobby link copied!',
+        type: 'is-info',
+        position: 'is-top',
+      });
+    },
+  },
   watch: {
     gameStarted(newGameStarted) {
       if (newGameStarted === true) {
@@ -62,5 +74,9 @@ export default Vue.extend({
 <style scoped>
 #start-game-button {
   margin-top: 1em;
+}
+
+.share-text {
+  margin-right: 2em;
 }
 </style>

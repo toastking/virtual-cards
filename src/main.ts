@@ -13,12 +13,15 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 Vue.config.productionTip = false;
 
-Vue.use(Buefy);
+Vue.component('font-awesome-icon', FontAwesomeIcon);
+
+Vue.use(Buefy, {
+  defaultIconComponent: 'font-awesome-icon',
+  defaultIconPack: 'far',
+});
 Vue.use(Vuex);
 Vue.use(VuePlayingCard);
 Vue.use(VueClipboard);
-
-Vue.component('font-awesome-icon', FontAwesomeIcon);
 
 // Add icons
 library.add(faCopy);
