@@ -1,7 +1,9 @@
 import { app } from '@/db';
-import { DeckModule, DeckState } from '@/store/modules/deck';
+import { DeckModule, DeckState, Deck } from '@/store/modules/deck';
 import { GameState } from '@/store/modules/game';
 import { exposeMockFirebaseApp } from 'ts-mock-firebase';
+import { ActionHandler } from 'vuex';
+import { State } from '@/store';
 
 describe('Deck Store Module', () => {
   const firebaseMock = exposeMockFirebaseApp(app);
@@ -105,6 +107,38 @@ describe('Deck Store Module', () => {
       const updatedGame = gameRef.data();
 
       expect(updatedGame!.gameCompleted).toBe(true);
+    });
+
+    test('restartGame', async () => {
+      const restartGame = actions.restartGame as Function;
+
+      //Setup firestore
+      firebaseMock.firestore().mocker.loadCollection('games', {
+        xyz: {},
+      });
+      firebaseMock
+        .firestore()
+        .doc('games/xyz')
+        .set({ gameCompleted: false });
+
+      firebaseMock
+        .firestore()
+        .doc('games/xyz')
+        .collection('decks')
+        .doc('deck1')
+        .set({ drawnCards: ['as'], currentCard: 'as' });
+
+      await restartGame({ rootState });
+
+      const decksRef = await firebaseMock
+        .firestore()
+        .doc('games/xyz')
+        .collection('decks')
+        .get();
+      const deck = decksRef.docs[0].data() as Deck;
+
+      expect(Object.values(deck.drawnCards).length).toBe(0);
+      expect(deck.currentCard).toBeUndefined();
     });
   });
 });

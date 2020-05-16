@@ -41,6 +41,7 @@ export const DeckModule: Module<DeckState, State> = {
             .doc(gameId)
             .update(updatedGame);
         } else {
+          // Update the card and drawn cards for the current deck
           const fieldsToUpdate: Partial<Deck> = {
             currentCard: drawnCard,
             drawnCards: updatedDrawnCards,
@@ -64,6 +65,29 @@ export const DeckModule: Module<DeckState, State> = {
           .doc(gameId)
           .collection('decks')
           .add(newDeck);
+      }
+    },
+    /** Resets the deck when the game is over and we need to restart the game */
+    async restartGame({ rootState }) {
+      const { gameId } = rootState.game;
+      if (gameId) {
+        const decksRef = db
+          .collection('games')
+          .doc(gameId)
+          .collection('decks');
+        const deckDocuments = await decksRef.get();
+
+        const batch = db.batch();
+
+        deckDocuments.forEach(deck => {
+          const updatedDeck: Partial<Deck> = {
+            currentCard: undefined,
+            drawnCards: [],
+          };
+          batch.update(decksRef.doc(deck.id), updatedDeck);
+        });
+
+        batch.commit();
       }
     },
     setupDeckBinding: firestoreAction(({ rootState, bindFirestoreRef }) => {

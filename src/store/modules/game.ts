@@ -93,9 +93,28 @@ export const GameModule: Module<GameState, State> = {
       if (gameId) {
         // set game started to true and set the current player id to the first player
         const firstPlayerId = rootState.player.players[0].id;
-        db.collection('games')
+        return db
+          .collection('games')
           .doc(gameId)
           .update({ gameStarted: true, currentPlayer: firstPlayerId });
+      }
+    },
+    /** Restart the game when a game is over */
+    restartGame({ state, rootState }) {
+      const { gameId } = state;
+      if (gameId) {
+        // set game started to true and set the current player id to the first player
+        const firstPlayerId = rootState.player.players[0].id;
+        const updatedGame: Partial<Game> = {
+          gameStarted: true,
+          gameCompleted: false,
+          currentPlayer: firstPlayerId,
+        };
+
+        return db
+          .collection('games')
+          .doc(gameId)
+          .update(updatedGame);
       }
     },
     /** Setup the firebase binding for the game */

@@ -95,6 +95,41 @@ describe('Game Store Module', () => {
 
       expect(dispatch).toHaveBeenCalledWith('addDeck');
     });
+
+    test('restartGame', async () => {
+      // Test that we update the gameStarted value for the game
+      const restartGame = actions.restartGame as Function;
+      const firestore = firebaseMock.firestore();
+      firestore.mocker.loadCollection('games', {
+        xyz: { gameStarted: true, gameCompleted: true },
+      });
+
+      const state: Partial<GameState> = {
+        gameId: 'xyz',
+        game: {
+          currentPlayer: null,
+          gameCompleted: false,
+          gameStarted: false,
+        },
+      };
+      const player: Partial<PlayerState> = {
+        players: [{ name: 'mort', id: 'foo', avatar: Avatar.NONE }],
+      };
+      const rootState = { player };
+
+      await restartGame({ state, rootState });
+
+      const game = firestore.mocker
+        .collection('games')
+        .mocker.getShallowCollection().xyz;
+      expect(game).toEqual(
+        expect.objectContaining({
+          gameStarted: true,
+          gameCompleted: false,
+          currentPlayer: 'foo',
+        })
+      );
+    });
   });
 
   describe('mutations', () => {
