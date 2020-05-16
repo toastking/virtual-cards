@@ -2,12 +2,18 @@
   <div class="box has-background-white-ter">
     <h2 class="title is-2">Players</h2>
     <ol class="list">
-      <li class="list-item player-card" v-for="player in players" :key="player.id">
-        <span class="player-info">
-          <avatar :avatar="player.avatar" />
-          <span class="player-name is-size-3">{{ player.name }}</span>
-          <span v-if="isTurn(player)" class="turn-tag tag is-success is-medium">Your Turn!</span>
-        </span>
+      <li class="player-list-item list-item" v-for="player in players" :key="player.id">
+        <b-tooltip class="columns is-vcentered player-info" :label="player.name" animated>
+          <div class="column is-narrow">
+            <avatar :avatar="player.avatar" />
+          </div>
+          <div class="column player-name has-text-left is-size-4">
+            <p>{{ player.name }}</p>
+          </div>
+          <div class="column is-narrow">
+            <span v-if="isTurn(player)" class="turn-tag tag is-success is-medium">Turn</span>
+          </div>
+        </b-tooltip>
       </li>
     </ol>
   </div>
@@ -38,13 +44,13 @@ export default Vue.extend({
 </script>
 
 <style scoped>
-.player-info {
-  display: flex;
-  align-items: center;
+.player-name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.turn-tag {
-  margin-left: auto;
-  margin-right: 0;
+.player-list-item {
+  cursor: pointer;
 }
 </style>

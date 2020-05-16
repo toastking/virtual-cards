@@ -14,49 +14,69 @@ exports[`PlayerList renders the list of players from the store 1`] = `
     class="list"
   >
     <li
-      class="list-item player-card"
+      class="player-list-item list-item"
     >
       <span
-        class="player-info"
+        class="columns is-vcentered player-info is-primary is-top is-medium b-tooltip is-animated"
+        data-label="foo"
+        style="transition-delay: 0ms;"
       >
-        <figure
-          class="image is-48x48"
+        <div
+          class="column is-narrow"
         >
-          <img
-            src="../assets/logo.png"
-          />
-        </figure>
+          <div>
+            <img
+              src="../assets/logo.png"
+            />
+          </div>
+        </div>
          
-        <span
-          class="player-name is-size-3"
+        <div
+          class="column player-name has-text-left is-size-4"
         >
-          foo
-        </span>
+          <p>
+            foo
+          </p>
+        </div>
          
-        <!---->
+        <div
+          class="column is-narrow"
+        >
+          <!---->
+        </div>
       </span>
     </li>
     <li
-      class="list-item player-card"
+      class="player-list-item list-item"
     >
       <span
-        class="player-info"
+        class="columns is-vcentered player-info is-primary is-top is-medium b-tooltip is-animated"
+        data-label="bar"
+        style="transition-delay: 0ms;"
       >
-        <figure
-          class="image is-48x48"
+        <div
+          class="column is-narrow"
         >
-          <img
-            src="../assets/logo.png"
-          />
-        </figure>
+          <div>
+            <img
+              src="../assets/logo.png"
+            />
+          </div>
+        </div>
          
-        <span
-          class="player-name is-size-3"
+        <div
+          class="column player-name has-text-left is-size-4"
         >
-          bar
-        </span>
+          <p>
+            bar
+          </p>
+        </div>
          
-        <!---->
+        <div
+          class="column is-narrow"
+        >
+          <!---->
+        </div>
       </span>
     </li>
   </ol>

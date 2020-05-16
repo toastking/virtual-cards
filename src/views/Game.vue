@@ -3,11 +3,11 @@
     <game-notification />
     <div class="game-container container is-fluid">
       <div class="columns">
-        <div class="column is-three-quarters">
+        <div class="column is-three-fifths">
           <play-area></play-area>
           <game-buttons></game-buttons>
         </div>
-        <div class="column">
+        <div class="column is-two-fifths">
           <player-list></player-list>
         </div>
       </div>
