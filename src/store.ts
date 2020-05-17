@@ -29,6 +29,9 @@ export default new Vuex.Store<State>({
     },
   },
   getters: {
+    decks(state) {
+      return state.deck.decks;
+    },
     gameOver(state) {
       return state.game.game.gameCompleted;
     },

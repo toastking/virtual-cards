@@ -2,7 +2,9 @@
   <section>
     <div class="playing-card-container container box">
       <div class="level">
-        <vue-playing-card class="level-item" v-if="!gameOver" cover></vue-playing-card>
+        <div class="level-item remaining-deck" v-if="!gameOver" v-on:click="drawCard()">
+          <vue-playing-card cover></vue-playing-card>
+        </div>
         <div class="level-item" v-for="deck of decks" :key="deck.id">
           <vue-playing-card
             v-if="!!deck.currentCard"
@@ -14,18 +16,21 @@
     </div>
   </section>
 </template>
+
 <script lang="ts">
 import Vue from 'vue';
-import { mapState } from 'vuex';
+import { mapState, mapGetters, mapActions } from 'vuex';
 import { State } from '@/store';
 export default Vue.extend({
   computed: {
-    ...mapState({
-      decks(state: State) {
-        return state.deck.decks;
-      },
-    }),
-    ...mapState(['gameOver']),
+    ...mapGetters(['gameOver', 'decks']),
   },
+  methods: { ...mapActions(['drawCard']) },
 });
 </script>
+
+<style scoped>
+.remaining-deck {
+  cursor: pointer;
+}
+</style>

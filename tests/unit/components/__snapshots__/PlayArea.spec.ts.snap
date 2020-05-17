@@ -1,0 +1,72 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PlayArea snapshots hide cards when the game is over 1`] = `
+<section>
+  <div
+    class="playing-card-container container box"
+  >
+    <div
+      class="level"
+    >
+      <!---->
+       
+      <div
+        class="level-item"
+      >
+        <vue-playing-card-stub
+          signature="4s"
+        />
+      </div>
+    </div>
+  </div>
+</section>
+`;
+
+exports[`PlayArea snapshots show a card when there is one 1`] = `
+<section>
+  <div
+    class="playing-card-container container box"
+  >
+    <div
+      class="level"
+    >
+      <div
+        class="level-item remaining-deck"
+      >
+        <vue-playing-card-stub
+          cover="true"
+        />
+      </div>
+       
+      <div
+        class="level-item"
+      >
+        <vue-playing-card-stub
+          signature="4s"
+        />
+      </div>
+    </div>
+  </div>
+</section>
+`;
+
+exports[`PlayArea snapshots show only the blank deck when there are no decks 1`] = `
+<section>
+  <div
+    class="playing-card-container container box"
+  >
+    <div
+      class="level"
+    >
+      <div
+        class="level-item remaining-deck"
+      >
+        <vue-playing-card-stub
+          cover="true"
+        />
+      </div>
+       
+    </div>
+  </div>
+</section>
+`;
