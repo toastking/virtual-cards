@@ -1,5 +1,5 @@
-import { mockFirebase } from 'ts-mock-firebase';
 import { firestore as f } from 'firebase';
+import { mockFirebase } from 'ts-mock-firebase';
 
 const firebase = mockFirebase();
 
