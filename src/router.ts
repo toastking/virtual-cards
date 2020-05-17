@@ -14,7 +14,9 @@ const router = new Router({
       path: '/start/:gameid?',
       name: 'start',
       component: Home,
+      meta: { title: 'Zooted - Join or Create Game' },
     },
+    // TODO: remove about route
     {
       path: '/about',
       name: 'about',
@@ -28,13 +30,19 @@ const router = new Router({
       path: '/lobby/:gameid',
       name: 'lobby',
       component: Lobby,
+      meta: { title: 'Zooted - Lobby' },
     },
     {
       path: '/game/:gameid',
       name: 'game',
       component: Game,
+      meta: { title: 'Zooted - Game' },
     },
   ],
 });
-
+// Set the title based on the route
+router.beforeEach((to, _, next) => {
+  document.title = to?.meta?.title ?? 'Zooted';
+  next();
+});
 export default router;

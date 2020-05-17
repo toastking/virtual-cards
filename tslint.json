@@ -10,6 +10,8 @@
   },
   "rules": {
     "object-literal-sort-keys": false,
+    "interface-name": false,
+    "ban-types": false,
     "prettier": true
   }
 }
