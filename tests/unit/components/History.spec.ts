@@ -1,10 +1,10 @@
-import { Store } from 'vuex-mock-store';
 import History from '@/components/History.vue';
-import { mount } from '@vue/test-utils';
 import { HistoryEntry } from '@/store/modules/history';
-import { Player, Avatar } from '@/store/modules/player';
-import MockDate from 'mockdate';
+import { Avatar, Player } from '@/store/modules/player';
+import { mount } from '@vue/test-utils';
 import { firestore } from 'firebase';
+import MockDate from 'mockdate';
+import { Store } from 'vuex-mock-store';
 
 describe('History', () => {
   const histories: Array<HistoryEntry & { player: Player }> = [];

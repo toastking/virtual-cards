@@ -1,9 +1,9 @@
 import { db } from '@/db';
 import { State } from '@/store';
+import { firestore } from 'firebase';
 import { Module } from 'vuex';
 import { firestoreAction } from 'vuexfire';
 import { Player } from './player';
-import { firestore } from 'firebase';
 
 /** A record of what card was drawn by what user */
 export interface HistoryEntry {

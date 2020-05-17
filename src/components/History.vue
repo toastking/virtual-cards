@@ -22,11 +22,11 @@
 
 <script lang="ts">
 import { State } from '@/store';
-import { parse } from 'playing-card-signature';
-import Vue from 'vue';
-import { mapGetters, mapState, mapActions } from 'vuex';
 import { firestore } from 'firebase';
 import moment from 'moment';
+import { parse } from 'playing-card-signature';
+import Vue from 'vue';
+import { mapActions, mapGetters, mapState } from 'vuex';
 
 export default Vue.extend({
   computed: {

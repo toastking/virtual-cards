@@ -2,9 +2,9 @@ import { app } from '@/db';
 import { GameState } from '@/store/modules/game';
 import { HistoryEntry, HistoryModule } from '@/store/modules/history';
 import { Player } from '@/store/modules/player';
-import { exposeMockFirebaseApp } from 'ts-mock-firebase';
-import MockDate from 'mockdate';
 import { firestore } from 'firebase';
+import MockDate from 'mockdate';
+import { exposeMockFirebaseApp } from 'ts-mock-firebase';
 describe('History Store Module', () => {
   const firebaseMock = exposeMockFirebaseApp(app);
 

@@ -1,8 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`History snapshots a few history elements 1`] = `
-<ol
+<span
   class="history-list list"
+  enter-active-class="animate__animated animate__fadeIn"
+  leave-active-class="animate__animated animate__fadeOut"
+  name="list"
+  tag="ol"
 >
   <li
     class="list-item has-text-left"
@@ -48,11 +52,15 @@ exports[`History snapshots a few history elements 1`] = `
       in 2 hours
     </span>
   </li>
-</ol>
+</span>
 `;
 
 exports[`History snapshots empty list 1`] = `
-<ol
+<span
   class="history-list list"
+  enter-active-class="animate__animated animate__fadeIn"
+  leave-active-class="animate__animated animate__fadeOut"
+  name="list"
+  tag="ol"
 />
 `;

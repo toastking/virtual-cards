@@ -29,9 +29,9 @@
 
 <script lang="ts">
 import { State } from '@/store';
+import { throttle } from 'lodash';
 import Vue from 'vue';
 import { mapActions, mapGetters, mapState } from 'vuex';
-import { throttle } from 'lodash';
 export default Vue.extend({
   created() {
     this.turnHandler = throttle(() => {

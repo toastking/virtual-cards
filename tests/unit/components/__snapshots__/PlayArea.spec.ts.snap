@@ -14,7 +14,10 @@ exports[`PlayArea snapshots hide cards when the game is over 1`] = `
         class="level-item"
       >
         <vue-playing-card-stub
+          enter-active-class="animate__animated animate__flipInY"
+          name="playingcard"
           signature="4s"
+          tag="div"
         />
       </div>
     </div>
@@ -42,7 +45,10 @@ exports[`PlayArea snapshots show a card when there is one 1`] = `
         class="level-item"
       >
         <vue-playing-card-stub
+          enter-active-class="animate__animated animate__flipInY"
+          name="playingcard"
           signature="4s"
+          tag="div"
         />
       </div>
     </div>

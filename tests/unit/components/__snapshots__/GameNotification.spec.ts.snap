@@ -1,83 +1,69 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`GameNotification snapshots show player banner when it is their turn 1`] = `
-<div
-  class="container"
+<section
+  class="hero is-info container"
+  enter-active-class="animate__animated animate__jackInTheBox"
+  exit-active-class="animate__animated animate__slideOutLeft"
+  tag="div"
 >
-  <section
-    class="hero is-info"
+  <div
+    class="hero-body"
   >
     <div
-      class="hero-body"
+      class="container"
     >
-      <div
-        class="container"
+      <h1
+        class="title"
       >
-        <h1
-          class="title"
-        >
-          Your Turn!
-        </h1>
-      </div>
+        Your Turn!
+      </h1>
     </div>
-  </section>
-   
-  <!---->
-</div>
+  </div>
+</section>
 `;
 
 exports[`GameNotification snapshots shows game over banner when the game is over 1`] = `
-<div
-  class="container"
+<section
+  class="hero is-success container"
+  enter-active-class="animate__animated animate__jackInTheBox"
+  exit-active-class="animate__animated animate__slideOutLeft"
+  tag="div"
 >
-  <!---->
-   
-  <section
-    class="hero is-success"
+  <div
+    class="hero-body"
   >
     <div
-      class="hero-body"
+      class="container"
     >
-      <div
-        class="container"
+      <h1
+        class="title"
       >
-        <h1
-          class="title"
+        Game Over!
+      </h1>
+       
+      <button
+        class="button is-success is-inverted"
+        id="new-game-button"
+        type="button"
+      >
+        <span
+          class="icon is-small"
         >
-          Game Over!
-        </h1>
+          <i
+            class="mdi mdi-redo"
+          />
+        </span>
          
-        <button
-          class="button is-success is-inverted"
-          id="new-game-button"
-          type="button"
-        >
-          <span
-            class="icon is-small"
-          >
-            <i
-              class="mdi mdi-redo"
-            />
-          </span>
-           
-          <span>
-            New Game
-          </span>
-           
-          <!---->
-        </button>
-      </div>
+        <span>
+          New Game
+        </span>
+         
+        <!---->
+      </button>
     </div>
-  </section>
-</div>
+  </div>
+</section>
 `;
 
-exports[`GameNotification snapshots shows nothing when its not the players turn 1`] = `
-<div
-  class="container"
->
-  <!---->
-   
-  <!---->
-</div>
-`;
+exports[`GameNotification snapshots shows nothing when its not the players turn 1`] = `<!---->`;

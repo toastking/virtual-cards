@@ -7,7 +7,9 @@ import { Store } from 'vuex-mock-store';
 describe('PlayArea', () => {
   const decks: DeckState['decks'] = [{ drawnCards: [] }];
 
-  const store = new Store({ getters: { gameOver: false, decks } });
+  const store = new Store({
+    getters: { gameOver: false, decks, isYourTurn: true, turnIsLoading: false },
+  });
   // add other mocks here so they are accessible in every component
   const mocks = {
     $store: store,
@@ -46,6 +48,6 @@ describe('PlayArea', () => {
   test('clicking the card draws a card', () => {
     const wrapper = shallowMount(PlayArea, { mocks, localVue });
     wrapper.find('.remaining-deck').trigger('click');
-    expect(store.dispatch).toBeCalledWith('drawCard');
+    expect(store.dispatch).toBeCalledWith('doTurn');
   });
 });

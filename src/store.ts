@@ -4,7 +4,7 @@ import { vuexfireMutations } from 'vuexfire';
 import { DeckModule, DeckState } from './store/modules/deck';
 import { GameModule, GameState, LoadingStatus } from './store/modules/game';
 import { HistoryModule, HistoryState } from './store/modules/history';
-import { PlayerModule, PlayerState, Player } from './store/modules/player';
+import { Player, PlayerModule, PlayerState } from './store/modules/player';
 
 Vue.use(Vuex);
 
