@@ -4,9 +4,8 @@
     <div class="game-container container is-fluid">
       <div class="columns">
         <div class="column is-three-fifths">
-          <play-area></play-area>
-          <game-buttons></game-buttons>
-          <history />
+          <play-area />
+          <history class="history" />
         </div>
         <div class="column is-two-fifths">
           <player-list></player-list>
@@ -17,7 +16,6 @@
 </template>
 
 <script lang="ts">
-import GameButtons from '@/components/GameButtons.vue';
 import GameNotification from '@/components/GameNotification.vue';
 import History from '@/components/History.vue';
 import PlayArea from '@/components/PlayArea.vue';
@@ -47,7 +45,6 @@ export default Vue.extend({
   },
   components: {
     'play-area': PlayArea,
-    'game-buttons': GameButtons,
     'player-list': PlayerList,
     'game-notification': GameNotification,
     history: History,
@@ -58,5 +55,9 @@ export default Vue.extend({
 <style scoped>
 .game-container {
   padding: 1em;
+}
+
+.history {
+  margin-top: 1em;
 }
 </style>
