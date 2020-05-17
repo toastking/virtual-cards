@@ -4,7 +4,7 @@ import { vuexfireMutations } from 'vuexfire';
 import { DeckModule, DeckState } from './store/modules/deck';
 import { GameModule, GameState, LoadingStatus } from './store/modules/game';
 import { HistoryModule, HistoryState } from './store/modules/history';
-import { PlayerModule, PlayerState } from './store/modules/player';
+import { PlayerModule, PlayerState, Player } from './store/modules/player';
 
 Vue.use(Vuex);
 
@@ -20,7 +20,7 @@ export default new Vuex.Store<State>({
     ...vuexfireMutations,
   },
   actions: {
-    async doTurn({ dispatch, commit }) {
+    async doTurn({ dispatch, commit, getters }) {
       commit('turnRequestStarted');
 
       // Draw a card, wait a little bit, then go to the next player
@@ -45,6 +45,10 @@ export default new Vuex.Store<State>({
     },
     turnIsLoading(state): boolean {
       return state.game.turnLoadingState === LoadingStatus.LOADING;
+    },
+    currentPlayer(state): Player | undefined {
+      const id = state.game.game.currentPlayer;
+      return state.player.players.find(player => id === player.id);
     },
   },
   modules: {

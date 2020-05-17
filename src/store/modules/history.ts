@@ -45,7 +45,7 @@ export const HistoryModule: Module<HistoryState, State> = {
             .collection('games')
             .doc(gameId)
             .collection('history')
-            .orderBy('timestamp')
+            .orderBy('timestamp', 'desc')
         );
       }
     }),

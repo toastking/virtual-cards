@@ -2,6 +2,7 @@ import { app } from '@/db';
 import { Deck, DeckModule, DeckState } from '@/store/modules/deck';
 import { GameState } from '@/store/modules/game';
 import { exposeMockFirebaseApp } from 'ts-mock-firebase';
+import { Player, Avatar } from '@/store/modules/player';
 
 describe('Deck Store Module', () => {
   const firebaseMock = exposeMockFirebaseApp(app);
@@ -53,8 +54,15 @@ describe('Deck Store Module', () => {
         cardsStillLeft: ['sa'],
         currentDeck: state.decks![0],
       };
+      const mockPlayer: Player = {
+        avatar: Avatar.NONE,
+        name: 'foo',
+        id: 'id1',
+      };
+      const rootGetters = { currentPlayer: mockPlayer };
+      const dispatch = jest.fn();
 
-      await drawCard({ state, rootState, getters });
+      await drawCard({ state, rootState, getters, rootGetters, dispatch });
 
       const newDeckRef = await firebaseMock
         .firestore()
@@ -65,6 +73,12 @@ describe('Deck Store Module', () => {
 
       expect(newDeck!.drawnCards.length).toBe(1);
       expect(newDeck!.currentCard).toEqual(expect.any(String));
+
+      // Check we added to the history
+      expect(dispatch).toHaveBeenCalledWith('addHistory', {
+        card: 'sa',
+        player: mockPlayer,
+      });
     });
 
     test('drawCard changes the game to ended', async () => {

@@ -21,7 +21,7 @@ export const DeckModule: Module<DeckState, State> = {
   state: () => ({ decks: [], currentDeckIndex: 0 }),
   actions: {
     /** Draw a random card from a deck in the game */
-    drawCard({ rootState, getters }) {
+    drawCard({ rootState, getters, rootGetters, dispatch }) {
       // Get the drawn cards for the current deck
       const availableCards: string[] = getters.cardsStillLeft;
       const cardIndex = Math.floor(Math.random() * availableCards.length);
@@ -46,6 +46,11 @@ export const DeckModule: Module<DeckState, State> = {
             currentCard: drawnCard,
             drawnCards: updatedDrawnCards,
           };
+          // Add this to the history
+          dispatch('addHistory', {
+            card: drawnCard,
+            player: rootGetters.currentPlayer,
+          });
           return db
             .collection('games')
             .doc(gameId)
