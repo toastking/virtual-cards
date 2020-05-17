@@ -6,6 +6,7 @@
         <div class="column is-three-fifths">
           <play-area></play-area>
           <game-buttons></game-buttons>
+          <history />
         </div>
         <div class="column is-two-fifths">
           <player-list></player-list>
@@ -18,33 +19,38 @@
 <script lang="ts">
 import GameButtons from '@/components/GameButtons.vue';
 import GameNotification from '@/components/GameNotification.vue';
+import History from '@/components/History.vue';
 import PlayArea from '@/components/PlayArea.vue';
 import PlayerList from '@/components/PlayerList.vue';
 import Vue from 'vue';
-import { mapActions } from 'vuex';
+import { mapActions, mapMutations, mapState } from 'vuex';
 
 export default Vue.extend({
   async mounted() {
     // Get the game ID from the route and set it in the store
     const gameId = this.$route.params.gameid;
-    this.$store.commit('createGameSuccess', { newGameId: gameId });
+    this.createGameSuccess({ newGameId: gameId });
 
-    await this.$store.dispatch('setupGameBinding');
-    this.$store.dispatch('setupDeckBinding');
-    this.$store.dispatch('setupPlayerBinding');
+    await this.setupGameBinding();
+    this.setupDeckBinding();
+    this.setupPlayerBinding();
+    this.setupHistoryBinding();
   },
   methods: {
     ...mapActions([
       'setupDeckBinding',
       'setupGameBinding',
       'setupPlayerBinding',
+      'setupHistoryBinding',
     ]),
+    ...mapMutations(['createGameSuccess']),
   },
   components: {
     'play-area': PlayArea,
     'game-buttons': GameButtons,
     'player-list': PlayerList,
     'game-notification': GameNotification,
+    history: History,
   },
 });
 </script>

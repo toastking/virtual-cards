@@ -50,6 +50,25 @@ export default new Vuex.Store<State>({
       const id = state.game.game.currentPlayer;
       return state.player.players.find(player => id === player.id);
     },
+    historyWithPlayerInfo(state) {
+      // map the player info to an id
+      const playerMapping: Map<string, Player> = new Map();
+
+      for (const player of state.player.players) {
+        const { id } = player;
+        if (id) {
+          playerMapping.set(id, player);
+        }
+      }
+
+      if (state.history.history) {
+        return state.history.history.map(entry => ({
+          ...entry,
+          player: playerMapping.get(entry.playerId),
+        }));
+      }
+      return [];
+    },
   },
   modules: {
     game: GameModule,

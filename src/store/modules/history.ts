@@ -14,10 +14,11 @@ export interface HistoryEntry {
 }
 /** State for which card was drawn and when */
 export interface HistoryState {
-  history: HistoryEntry[];
+  history: HistoryEntry[] | null;
 }
 
 export const HistoryModule: Module<HistoryState, State> = {
+  state: () => ({ history: [] }),
   actions: {
     /** Adds the history to a game */
     addHistory({ rootState }, payload: { player: Player; card: string }) {
@@ -36,18 +37,29 @@ export const HistoryModule: Module<HistoryState, State> = {
           .add(historyEntry);
       }
     },
-    setupHistoryBinding: firestoreAction(({ rootState, bindFirestoreRef }) => {
-      const { gameId } = rootState.game;
-      if (gameId) {
-        return bindFirestoreRef(
-          'history',
-          db
-            .collection('games')
-            .doc(gameId)
-            .collection('history')
-            .orderBy('timestamp', 'desc')
-        );
+    setupHistoryBinding: firestoreAction(
+      async ({ rootState, bindFirestoreRef }) => {
+        const { gameId } = rootState.game;
+        if (gameId) {
+          return bindFirestoreRef(
+            'history',
+            db
+              .collection('games')
+              .doc(gameId)
+              .collection('history')
+              .orderBy('timestamp', 'desc')
+          );
+        }
       }
-    }),
+    ),
+  },
+  getters: {
+    historyForPlayer(state) {
+      return (player: Player) => {
+        if (state.history) {
+          return state.history.filter(entry => entry.playerId === player.id);
+        }
+      };
+    },
   },
 };

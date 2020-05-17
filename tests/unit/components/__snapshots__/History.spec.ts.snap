@@ -1,0 +1,58 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`History snapshots a few history elements 1`] = `
+<ol
+  class="history-list list"
+>
+  <li
+    class="list-item has-text-left"
+  >
+    <span
+      class="has-text-info"
+    >
+      mort 
+    </span>
+     drew
+    
+    <span
+      class="history-card-info"
+    >
+      4♠️
+    </span>
+     
+    <span
+      class="has-text-grey-light"
+    >
+      in 2 hours
+    </span>
+  </li>
+  <li
+    class="list-item has-text-left"
+  >
+    <span
+      class="has-text-info"
+    >
+      stove 
+    </span>
+     drew
+    
+    <span
+      class="history-card-info"
+    >
+      5♥️
+    </span>
+     
+    <span
+      class="has-text-grey-light"
+    >
+      in 2 hours
+    </span>
+  </li>
+</ol>
+`;
+
+exports[`History snapshots empty list 1`] = `
+<ol
+  class="history-list list"
+/>
+`;
