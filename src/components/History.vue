@@ -1,5 +1,11 @@
 <template>
-  <ol class="history-list list">
+  <transition-group
+    class="history-list list"
+    name="list"
+    tag="ol"
+    enter-active-class="animate__animated animate__fadeIn"
+    leave-active-class="animate__animated animate__fadeOut"
+  >
     <li
       class="list-item has-text-left"
       v-for="entry of historyWithPlayerInfo"
@@ -11,7 +17,7 @@
         prettyPrintTime(entry.timestamp)
       }}</span>
     </li>
-  </ol>
+  </transition-group>
 </template>
 
 <script lang="ts">
@@ -41,7 +47,7 @@ export default Vue.extend({
 
 <style scoped>
 .history-list {
-  height: 25em;
+  height: 15em;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
 }

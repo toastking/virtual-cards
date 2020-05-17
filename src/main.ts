@@ -31,3 +31,6 @@ new Vue({
   store,
   render: h => h(App),
 }).$mount('#app');
+
+// tslint:disable-next-line: no-var-requires
+require('../node_modules/animate.css/animate.min.css');

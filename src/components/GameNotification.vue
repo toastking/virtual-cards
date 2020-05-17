@@ -1,5 +1,10 @@
 <template>
-  <div class="container">
+  <transition
+    class="container"
+    tag="div"
+    enter-active-class="animate__animated animate__jackInTheBox"
+    exit-active-class="animate__animated animate__slideOutLeft"
+  >
     <section v-if="isYourTurn" class="hero is-info">
       <div class="hero-body">
         <div class="container">
@@ -17,11 +22,12 @@
             icon-left="redo"
             v-on:click="restartGame()"
             inverted
-          >New Game</b-button>
+            >New Game</b-button
+          >
         </div>
       </div>
     </section>
-  </div>
+  </transition>
 </template>
 
 <script lang="ts">
