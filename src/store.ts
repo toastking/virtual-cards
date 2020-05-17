@@ -1,8 +1,9 @@
 import Vue from 'vue';
-import Vuex, { Store } from 'vuex';
+import Vuex from 'vuex';
 import { vuexfireMutations } from 'vuexfire';
 import { DeckModule, DeckState } from './store/modules/deck';
 import { GameModule, GameState, LoadingStatus } from './store/modules/game';
+import { HistoryModule, HistoryState } from './store/modules/history';
 import { PlayerModule, PlayerState } from './store/modules/player';
 
 Vue.use(Vuex);
@@ -11,6 +12,7 @@ export interface State {
   game: GameState;
   player: PlayerState;
   deck: DeckState;
+  history: HistoryState;
 }
 
 export default new Vuex.Store<State>({
@@ -45,5 +47,10 @@ export default new Vuex.Store<State>({
       return state.game.turnLoadingState === LoadingStatus.LOADING;
     },
   },
-  modules: { game: GameModule, player: PlayerModule, deck: DeckModule },
+  modules: {
+    game: GameModule,
+    player: PlayerModule,
+    deck: DeckModule,
+    history: HistoryModule,
+  },
 });

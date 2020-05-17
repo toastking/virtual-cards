@@ -1,9 +1,7 @@
 import { app } from '@/db';
-import { State } from '@/store';
 import { Deck, DeckModule, DeckState } from '@/store/modules/deck';
 import { GameState } from '@/store/modules/game';
 import { exposeMockFirebaseApp } from 'ts-mock-firebase';
-import { ActionHandler } from 'vuex';
 
 describe('Deck Store Module', () => {
   const firebaseMock = exposeMockFirebaseApp(app);

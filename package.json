@@ -45,6 +45,7 @@
     "firebase-mock": "^2.3.2",
     "jest-localstorage-mock": "^2.4.2",
     "jest-serializer-vue": "^2.0.2",
+    "mockdate": "^2.0.5",
     "node-sass": "^4.14.1",
     "sass-loader": "^8.0.0",
     "ts-jest": "^23.0.0",
