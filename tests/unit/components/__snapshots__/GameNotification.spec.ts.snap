@@ -1,0 +1,83 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GameNotification snapshots show player banner when it is their turn 1`] = `
+<div
+  class="container"
+>
+  <section
+    class="hero is-info"
+  >
+    <div
+      class="hero-body"
+    >
+      <div
+        class="container"
+      >
+        <h1
+          class="title"
+        >
+          Your Turn!
+        </h1>
+      </div>
+    </div>
+  </section>
+   
+  <!---->
+</div>
+`;
+
+exports[`GameNotification snapshots shows game over banner when the game is over 1`] = `
+<div
+  class="container"
+>
+  <!---->
+   
+  <section
+    class="hero is-success"
+  >
+    <div
+      class="hero-body"
+    >
+      <div
+        class="container"
+      >
+        <h1
+          class="title"
+        >
+          Game Over!
+        </h1>
+         
+        <button
+          class="button is-success is-inverted"
+          id="new-game-button"
+          type="button"
+        >
+          <span
+            class="icon is-small"
+          >
+            <i
+              class="mdi mdi-redo"
+            />
+          </span>
+           
+          <span>
+            New Game
+          </span>
+           
+          <!---->
+        </button>
+      </div>
+    </div>
+  </section>
+</div>
+`;
+
+exports[`GameNotification snapshots shows nothing when its not the players turn 1`] = `
+<div
+  class="container"
+>
+  <!---->
+   
+  <!---->
+</div>
+`;

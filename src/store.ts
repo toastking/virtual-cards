@@ -33,7 +33,10 @@ export default new Vuex.Store<State>({
       return state.game.game.gameCompleted;
     },
     isYourTurn(state): boolean {
-      return state.game.game.currentPlayer === state.player.userPlayerId;
+      return (
+        state.game.game.currentPlayer === state.player.userPlayerId &&
+        !state.game.game.gameCompleted
+      );
     },
     turnIsLoading(state): boolean {
       return state.game.turnLoadingState === LoadingStatus.LOADING;

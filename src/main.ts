@@ -8,23 +8,23 @@ import Vuex from 'vuex';
 import VuePlayingCard from 'vue-playing-card';
 import VueClipboard from 'vue-clipboard2';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faCopy } from '@fortawesome/free-regular-svg-icons';
+import { faCopy, faRedo } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 Vue.config.productionTip = false;
 
+// Add icons
+library.add(faCopy);
+library.add(faRedo);
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 
 Vue.use(Buefy, {
   defaultIconComponent: 'font-awesome-icon',
-  defaultIconPack: 'far',
+  defaultIconPack: 'fas',
 });
 Vue.use(Vuex);
 Vue.use(VuePlayingCard);
 Vue.use(VueClipboard);
-
-// Add icons
-library.add(faCopy);
 
 new Vue({
   router,

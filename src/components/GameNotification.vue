@@ -11,6 +11,13 @@
       <div class="hero-body">
         <div class="container">
           <h1 class="title">Game Over!</h1>
+          <b-button
+            id="new-game-button"
+            type="is-success"
+            icon-left="redo"
+            v-on:click="restartGame()"
+            inverted
+          >New Game</b-button>
         </div>
       </div>
     </section>
@@ -19,8 +26,9 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 export default Vue.extend({
   computed: { ...mapGetters(['isYourTurn', 'gameOver']) },
+  methods: { ...mapActions(['restartGame']) },
 });
 </script>
