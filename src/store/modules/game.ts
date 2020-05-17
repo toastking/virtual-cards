@@ -3,7 +3,7 @@ import router from '@/router';
 import { State } from '@/store';
 import { Module } from 'vuex';
 import { firestoreAction } from 'vuexfire';
-import { Player, Avatar } from './player';
+import { Avatar, Player } from './player';
 
 export enum LoadingStatus {
   NOT_STARTED,

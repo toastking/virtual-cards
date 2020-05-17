@@ -1,7 +1,7 @@
-import { Module } from 'vuex';
-import { State } from '@/store';
-import { firestoreAction } from 'vuexfire';
 import { db } from '@/db';
+import { State } from '@/store';
+import { Module } from 'vuex';
+import { firestoreAction } from 'vuexfire';
 import { Game } from './game';
 
 export interface Deck {

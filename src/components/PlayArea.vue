@@ -18,9 +18,9 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import { mapState, mapGetters, mapActions } from 'vuex';
 import { State } from '@/store';
+import Vue from 'vue';
+import { mapActions, mapGetters, mapState } from 'vuex';
 export default Vue.extend({
   computed: {
     ...mapGetters(['gameOver', 'decks']),

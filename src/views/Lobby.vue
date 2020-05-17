@@ -27,10 +27,10 @@
 </template>
 <script lang="ts">
 // Lobby to show players
-import Vue from 'vue';
-import PlayerList from '../components/PlayerList.vue';
-import { mapState, mapActions } from 'vuex';
 import { State } from '@/store';
+import Vue from 'vue';
+import { mapActions, mapState } from 'vuex';
+import PlayerList from '../components/PlayerList.vue';
 export default Vue.extend({
   mounted() {
     // Get the game ID from the route and set it in the store

@@ -1,9 +1,9 @@
 import Vue from 'vue';
 import Vuex, { Store } from 'vuex';
 import { vuexfireMutations } from 'vuexfire';
+import { DeckModule, DeckState } from './store/modules/deck';
 import { GameModule, GameState, LoadingStatus } from './store/modules/game';
-import { PlayerState, PlayerModule } from './store/modules/player';
-import { DeckState, DeckModule } from './store/modules/deck';
+import { PlayerModule, PlayerState } from './store/modules/player';
 
 Vue.use(Vuex);
 

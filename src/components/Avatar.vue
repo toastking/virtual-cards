@@ -10,8 +10,8 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
 import { Avatar } from '@/store/modules/player';
+import Vue from 'vue';
 export default Vue.extend({
   data: () => ({ Avatar }),
   props: ['avatar'],

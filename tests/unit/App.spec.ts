@@ -1,7 +1,7 @@
 import App from '@/App.vue';
-import { shallowMount, createLocalVue } from '@vue/test-utils';
-import { Store } from 'vuex-mock-store';
+import { createLocalVue, shallowMount } from '@vue/test-utils';
 import VueRouter from 'vue-router';
+import { Store } from 'vuex-mock-store';
 
 describe('App', () => {
   const store = new Store({});

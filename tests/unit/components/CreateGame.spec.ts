@@ -1,10 +1,10 @@
 import CreateGame from '@/components/CreateGame.vue';
+import { Avatar } from '@/store/modules/player';
 import { createLocalVue, mount } from '@vue/test-utils';
 import Buefy from 'buefy';
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import { Store } from 'vuex-mock-store';
-import { Avatar } from '@/store/modules/player';
 
 describe('CreateGame Component', () => {
   const store = new Store({});

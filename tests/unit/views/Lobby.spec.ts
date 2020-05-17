@@ -1,9 +1,9 @@
-import { Store } from 'vuex-mock-store';
-import { shallowMount, createLocalVue, mount } from '@vue/test-utils';
 import Lobby from '@/views/Lobby.vue';
-import VueRouter from 'vue-router';
+import { createLocalVue, mount, shallowMount } from '@vue/test-utils';
 import Buefy from 'buefy';
 import VueClipboard from 'vue-clipboard2';
+import VueRouter from 'vue-router';
+import { Store } from 'vuex-mock-store';
 
 describe('Lobby View', () => {
   const store = new Store({

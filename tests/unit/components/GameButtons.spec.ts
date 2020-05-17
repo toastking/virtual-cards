@@ -1,7 +1,7 @@
-import { Store } from 'vuex-mock-store';
+import GameButtons from '@/components/GameButtons.vue';
 import { createLocalVue, shallowMount } from '@vue/test-utils';
 import Buefy from 'buefy';
-import GameButtons from '@/components/GameButtons.vue';
+import { Store } from 'vuex-mock-store';
 
 describe('GameButtons', () => {
   const store = new Store({

@@ -20,12 +20,12 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
 import Avatar from '@/components/Avatar.vue';
-import { mapState, mapGetters } from 'vuex';
 import { State } from '@/store';
+import { Player, PlayerState } from '@/store/modules/player';
+import Vue from 'vue';
+import { mapGetters, mapState } from 'vuex';
 import { GameModule } from '../store/modules/game';
-import { PlayerState, Player } from '@/store/modules/player';
 
 export default Vue.extend({
   computed: mapState({

@@ -38,9 +38,9 @@
 </template>
 
 <script lang="ts">
+import { Avatar } from '@/store/modules/player';
 import Vue from 'vue';
 import { mapActions } from 'vuex';
-import { Avatar } from '@/store/modules/player';
 
 export default Vue.extend({
   data: () => ({

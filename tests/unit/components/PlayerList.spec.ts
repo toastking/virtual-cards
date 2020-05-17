@@ -1,7 +1,7 @@
 import PlayerList from '@/components/PlayerList.vue';
 import { Game, GameState } from '@/store/modules/game';
-import { Player, PlayerState, Avatar } from '@/store/modules/player';
-import { createLocalVue, shallowMount, mount } from '@vue/test-utils';
+import { Avatar, Player, PlayerState } from '@/store/modules/player';
+import { createLocalVue, mount, shallowMount } from '@vue/test-utils';
 import Buefy from 'buefy';
 import { Store } from 'vuex-mock-store';
 

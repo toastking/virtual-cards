@@ -11,9 +11,9 @@
 </template>
 
 <script lang="ts">
+import { throttle } from 'lodash';
 import Vue from 'vue';
 import { mapActions, mapGetters } from 'vuex';
-import { throttle } from 'lodash';
 
 export default Vue.extend({
   created() {

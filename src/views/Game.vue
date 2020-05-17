@@ -16,11 +16,11 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import PlayArea from '@/components/PlayArea.vue';
 import GameButtons from '@/components/GameButtons.vue';
-import PlayerList from '@/components/PlayerList.vue';
 import GameNotification from '@/components/GameNotification.vue';
+import PlayArea from '@/components/PlayArea.vue';
+import PlayerList from '@/components/PlayerList.vue';
+import Vue from 'vue';
 import { mapActions } from 'vuex';
 
 export default Vue.extend({

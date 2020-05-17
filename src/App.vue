@@ -6,8 +6,8 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
 import NavBar from '@/components/NavBar.vue';
+import Vue from 'vue';
 
 export default Vue.extend({
   mounted() {

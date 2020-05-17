@@ -1,12 +1,12 @@
 import Vue from 'vue';
 import Router from 'vue-router';
+import Game from './views/Game.vue';
 import Home from './views/Home.vue';
 import Lobby from './views/Lobby.vue';
-import Game from './views/Game.vue';
 
 Vue.use(Router);
 
-export default new Router({
+const router = new Router({
   routes: [
     // Have a route to prefill the gameid
     { path: '/', redirect: { name: 'start' } },
@@ -36,3 +36,5 @@ export default new Router({
     },
   ],
 });
+
+export default router;

@@ -1,12 +1,12 @@
 import { app } from '@/db';
 import {
+  Game,
   GameModule,
   GameState,
   LoadingStatus,
-  Game,
 } from '@/store/modules/game';
+import { Avatar, Player, PlayerState } from '@/store/modules/player';
 import { exposeMockFirebaseApp } from 'ts-mock-firebase';
-import { Player, PlayerState, Avatar } from '@/store/modules/player';
 
 describe('Game Store Module', () => {
   const firebaseMock = exposeMockFirebaseApp(app);

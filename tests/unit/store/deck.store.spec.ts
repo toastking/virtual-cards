@@ -1,9 +1,9 @@
 import { app } from '@/db';
-import { DeckModule, DeckState, Deck } from '@/store/modules/deck';
+import { State } from '@/store';
+import { Deck, DeckModule, DeckState } from '@/store/modules/deck';
 import { GameState } from '@/store/modules/game';
 import { exposeMockFirebaseApp } from 'ts-mock-firebase';
 import { ActionHandler } from 'vuex';
-import { State } from '@/store';
 
 describe('Deck Store Module', () => {
   const firebaseMock = exposeMockFirebaseApp(app);
@@ -36,7 +36,7 @@ describe('Deck Store Module', () => {
     test('drawCard', async () => {
       const drawCard = actions.drawCard as Function;
 
-      //Setup firestore
+      // Setup firestore
       firebaseMock.firestore().mocker.loadCollection('games', {
         xyz: {},
       });
@@ -72,7 +72,7 @@ describe('Deck Store Module', () => {
     test('drawCard changes the game to ended', async () => {
       const drawCard = actions.drawCard as Function;
 
-      //Setup firestore
+      // Setup firestore
       firebaseMock.firestore().mocker.loadCollection('games', {
         xyz: {},
       });
@@ -112,7 +112,7 @@ describe('Deck Store Module', () => {
     test('restartGame', async () => {
       const restartGame = actions.restartGame as Function;
 
-      //Setup firestore
+      // Setup firestore
       firebaseMock.firestore().mocker.loadCollection('games', {
         xyz: {},
       });
