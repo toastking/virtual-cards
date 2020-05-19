@@ -1,9 +1,17 @@
 <template>
-  <div class="box has-background-white-ter">
+  <div id="player-list" class="box has-background-white-ter">
     <h2 class="title is-2">Players</h2>
     <ol class="list">
-      <li class="player-list-item list-item" v-for="player in players" :key="player.id">
-        <b-tooltip class="columns is-vcentered player-info" :label="player.name" animated>
+      <li
+        class="player-list-item list-item"
+        v-for="player in players"
+        :key="player.id"
+      >
+        <b-tooltip
+          class="columns is-vcentered player-info"
+          :label="player.name"
+          animated
+        >
           <div class="column is-narrow">
             <avatar :avatar="player.avatar" />
           </div>
@@ -11,7 +19,11 @@
             <p>{{ player.name }}</p>
           </div>
           <div class="column is-narrow">
-            <span v-if="isTurn(player)" class="turn-tag tag is-success is-medium">Turn</span>
+            <span
+              v-if="isTurn(player)"
+              class="turn-tag tag is-success is-medium"
+              >Turn</span
+            >
           </div>
         </b-tooltip>
       </li>

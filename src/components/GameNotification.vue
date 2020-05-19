@@ -5,7 +5,7 @@
     enter-active-class="animate__animated animate__jackInTheBox"
     exit-active-class="animate__animated animate__slideOutLeft"
   >
-    <section v-if="isYourTurn" class="hero is-info">
+    <section v-if="isYourTurn" id="turn-notification" class="hero is-info">
       <div class="hero-body">
         <div class="container">
           <h1 class="title">Your Turn!</h1>

@@ -1,13 +1,14 @@
 <template>
   <div class="playing-card-container columns box">
     <div
+      id="deck"
       class="column remaining-deck"
       v-if="!gameOver"
       v-on:click="turnHandler()"
     >
       <vue-playing-card cover></vue-playing-card>
     </div>
-    <div class="column" v-for="deck of decks" :key="deck.id">
+    <div id="drawn-cards" class="column" v-for="deck of decks" :key="deck.id">
       <transition
         tag="div"
         name="playingcard"

@@ -1,5 +1,6 @@
 <template>
   <transition-group
+    id="history"
     class="history-list list"
     name="list"
     tag="ol"

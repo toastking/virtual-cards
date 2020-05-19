@@ -6,7 +6,9 @@
       </b-field>
       <b-field label="Avatar">
         <b-select v-model="avatar" placeholder="Select an avatar" expanded>
-          <option v-for="(value,key) in avatars" :value="value" :key="key">{{ key }}</option>
+          <option v-for="(value, key) in avatars" :value="value" :key="key">{{
+            key
+          }}</option>
         </b-select>
       </b-field>
       <b-field label="Game ID">
@@ -15,24 +17,33 @@
       <b-button
         id="join-game-button"
         type="is-primary"
-        v-on:click="joinGame({ playerName,avatar, gameId })"
-      >Join Game</b-button>
+        v-on:click="joinGame({ playerName, avatar, gameId })"
+        >Join Game</b-button
+      >
     </b-tab-item>
 
     <b-tab-item label="Create Game">
       <b-field label="Player Name">
-        <b-input v-model="playerName"></b-input>
+        <b-input id="host-player-name-input" v-model="playerName"></b-input>
       </b-field>
       <b-field label="Avatar">
-        <b-select v-model="avatar" placeholder="Select an avatar" expanded>
-          <option v-for="(value,key) in avatars" :value="value" :key="key">{{ key }}</option>
+        <b-select
+          id="host-avatar-select"
+          v-model="avatar"
+          placeholder="Select an avatar"
+          expanded
+        >
+          <option v-for="(value, key) in avatars" :value="value" :key="key">{{
+            key
+          }}</option>
         </b-select>
       </b-field>
       <b-button
         id="create-game-button"
         type="is-primary"
-        v-on:click="createGame({ hostPlayerName: playerName,avatar })"
-      >Create Game</b-button>
+        v-on:click="createGame({ hostPlayerName: playerName, avatar })"
+        >Create Game</b-button
+      >
     </b-tab-item>
   </b-tabs>
 </template>
