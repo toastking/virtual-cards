@@ -43,8 +43,15 @@ export default Vue.extend({
 });
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+@import '~bulma';
+
 .remaining-deck {
   cursor: pointer;
+  border-radius: $radius;
+}
+
+.remaining-deck:hover {
+  background: $primary;
 }
 </style>
