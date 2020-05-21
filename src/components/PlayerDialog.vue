@@ -1,22 +1,37 @@
 <template>
-  <div class="container">
-    <div v-if="isUserPlayer" id="change-player-name-form">
-      <h3>Change Player Name</h3>
-      <b-field label="New Name">
-        <b-input
-          id="new-player-name-input"
-          v-model="name"
-          placeholder="Name"
-        ></b-input>
-        <b-button
-          id="change-player-name-button"
-          type="is-primary"
-          v-on:click="changePlayerName(name)"
-          >Change Name</b-button
-        >
-      </b-field>
+  <form action="">
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">Player Options</p>
+      </header>
+      <section class="modal-card-body">
+        <div v-if="isUserPlayer" id="change-player-name-form">
+          <h3>Change Player Name</h3>
+          <b-field label="New Name">
+            <b-input
+              id="new-player-name-input"
+              v-model="name"
+              placeholder="Name"
+            ></b-input>
+          </b-field>
+          <b-button
+            id="change-player-name-button"
+            type="is-primary"
+            v-on:click="
+              changePlayerName(name);
+              $parent.close();
+            "
+            >Change Name</b-button
+          >
+        </div>
+      </section>
+      <footer class="modal-card-foot">
+        <button class="button" type="button" @click="$parent.close()">
+          Close
+        </button>
+      </footer>
     </div>
-  </div>
+  </form>
 </template>
 
 <script lang="ts">

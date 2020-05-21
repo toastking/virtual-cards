@@ -6,6 +6,10 @@
         class="player-list-item list-item"
         v-for="player in players"
         :key="player.id"
+        @click="
+          clickedPlayer = player;
+          showPlayerDialog = true;
+        "
       >
         <b-tooltip
           class="columns is-vcentered player-info"
@@ -28,11 +32,22 @@
         </b-tooltip>
       </li>
     </ol>
+    <b-modal
+      :active.sync="showPlayerDialog"
+      has-modal-card
+      trap-focus
+      :destroy-on-hide="false"
+      aria-role="dialog"
+      aria-modal
+    >
+      <playerDialog :player="clickedPlayer"></playerDialog>
+    </b-modal>
   </div>
 </template>
 
 <script lang="ts">
 import Avatar from '@/components/Avatar.vue';
+import PlayerDialog from '@/components/PlayerDialog.vue';
 import { State } from '@/store';
 import { Player, PlayerState } from '@/store/modules/player';
 import Vue from 'vue';
@@ -40,6 +55,10 @@ import { mapGetters, mapState } from 'vuex';
 import { GameModule } from '../store/modules/game';
 
 export default Vue.extend({
+  data: () => ({
+    clickedPlayer: null,
+    showPlayerDialog: false,
+  }),
   computed: mapState({
     players(state: State) {
       return state.player.players;
@@ -51,7 +70,7 @@ export default Vue.extend({
     },
     ...mapGetters(['isYourTurn']),
   },
-  components: { avatar: Avatar },
+  components: { avatar: Avatar, PlayerDialog },
 });
 </script>
 
