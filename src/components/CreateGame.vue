@@ -2,10 +2,15 @@
   <b-tabs>
     <b-tab-item label="Join a Game">
       <b-field label="Player Name">
-        <b-input v-model="playerName"></b-input>
+        <b-input id="player-name-input" v-model="playerName"></b-input>
       </b-field>
       <b-field label="Avatar">
-        <b-select v-model="avatar" placeholder="Select an avatar" expanded>
+        <b-select
+          id="player-avatar-select"
+          v-model="avatar"
+          placeholder="Select an avatar"
+          expanded
+        >
           <option v-for="(value, key) in avatars" :value="value" :key="key">{{
             key
           }}</option>
