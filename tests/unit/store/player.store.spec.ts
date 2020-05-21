@@ -6,7 +6,8 @@ import {
   PlayerModule,
   PlayerState,
 } from '@/store/modules/player';
-import { exposeMockFirebaseApp } from 'ts-mock-firebase';
+import { exposeMockFirebaseApp, MockDatabase } from 'ts-mock-firebase';
+import { firebaseAction } from 'vuexfire/dist/packages/vuexfire/src';
 
 describe('Player Store Module', () => {
   const firebaseMock = exposeMockFirebaseApp(app);
@@ -92,6 +93,37 @@ describe('Player Store Module', () => {
         .doc('games/xyz')
         .get();
       expect(updatedGame.data()!.currentPlayer).toBe('id2');
+    });
+
+    test('changePlayerName', async () => {
+      const player: Player = { id: 'id', name: 'foo', avatar: Avatar.NONE };
+
+      const firestore = firebaseMock.firestore();
+      // mock the database
+      const mockDatabase: MockDatabase = {
+        games: {
+          docs: {
+            xyz: {
+              collections: {
+                players: { docs: { id: { data: player } } },
+              },
+            },
+          },
+        },
+      };
+      firestore.mocker.fromMockDatabase(mockDatabase);
+
+      const changePlayerName = actions.changePlayerName as Function;
+      const getters = { userPlayer: player };
+      const rootState = { game: { gameId: 'xyz' } };
+
+      await changePlayerName({ getters, rootState }, 'tony');
+
+      const updatedPlayer = (
+        await firestore.doc('games/xyz/players/id').get()
+      ).data();
+
+      expect(updatedPlayer!.name).toBe('tony');
     });
   });
 

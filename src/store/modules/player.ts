@@ -69,6 +69,20 @@ export const PlayerModule: Module<PlayerState, State> = {
         dispatch('storePlayerId', { playerId: newPlayer.id });
       }
     },
+    /** Allow a user to change their name */
+    changePlayerName({ rootState, getters }, newName: string) {
+      const { gameId } = rootState.game;
+      const playerId: string | undefined = getters.userPlayer?.id;
+      if (gameId && playerId) {
+        const updatedName: Partial<Player> = { name: newName };
+        return db
+          .collection('games')
+          .doc(gameId)
+          .collection('players')
+          .doc(playerId)
+          .update(updatedName);
+      }
+    },
     /** Sets up the firebase binding for the players list  */
     setupPlayerBinding: firestoreAction(
       async ({ bindFirestoreRef, rootState }) => {
@@ -87,6 +101,11 @@ export const PlayerModule: Module<PlayerState, State> = {
     /** Stores the player id in session in case the page reloads */
     storePlayerId({}, payload: { playerId: string }) {
       sessionStorage.setItem('playerId', payload.playerId);
+    },
+  },
+  getters: {
+    userPlayer(state): Player | undefined {
+      return state.players.find(player => player.id === state.userPlayerId);
     },
   },
 };
