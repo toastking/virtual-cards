@@ -11,6 +11,7 @@ describe('PlayerDialog', () => {
   const store = new Store({
     state: { player: playerState },
   });
+
   // add other mocks here so they are accessible in every component
   const mocks = {
     $store: store,
