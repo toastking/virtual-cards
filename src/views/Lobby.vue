@@ -1,8 +1,10 @@
 <template>
   <section class="section">
     <h1 class="title is-1">Lobby</h1>
-    <div class="container has-background-info has-text-white columns is-vcentered">
-      <div class="share-text column is-three-quarters">Share! {{ shareUrl }}</div>
+    <div class="has-background-info has-text-white columns is-vcentered">
+      <div class="share-text column is-three-quarters">
+        Share! {{ shareUrl }}
+      </div>
       <div class="column">
         <b-button
           type="is-info"
@@ -11,7 +13,8 @@
           v-on:click="showCopySnackbar()"
           outlined
           inverted
-        >Copy</b-button>
+          >Copy</b-button
+        >
       </div>
     </div>
     <div class="container">
@@ -21,7 +24,8 @@
         type="is-success is-large"
         expanded
         v-on:click="startGame()"
-      >Start Game</b-button>
+        >Start Game</b-button
+      >
     </div>
   </section>
 </template>
