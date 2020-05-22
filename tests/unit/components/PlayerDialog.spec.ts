@@ -7,6 +7,7 @@ import { Store } from 'vuex-mock-store';
 
 describe('PlayerDialog', () => {
   const playerState: Partial<PlayerState> = { userPlayerId: 'playerid' };
+
   const store = new Store({
     state: { player: playerState },
   });
