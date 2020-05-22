@@ -3,6 +3,7 @@ import { State } from '@/store';
 import { Module } from 'vuex';
 import { firestoreAction } from 'vuexfire';
 import { Game } from './game';
+import { firestore } from 'firebase';
 
 export interface Deck {
   drawnCards: string[];
@@ -85,8 +86,8 @@ export const DeckModule: Module<DeckState, State> = {
         const batch = db.batch();
 
         deckDocuments.forEach(deck => {
-          const updatedDeck: Partial<Deck> = {
-            currentCard: undefined,
+          const updatedDeck = {
+            currentCard: firestore.FieldValue.delete(),
             drawnCards: [],
           };
           batch.update(decksRef.doc(deck.id), updatedDeck);

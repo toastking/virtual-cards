@@ -3,6 +3,7 @@ import { Deck, DeckModule, DeckState } from '@/store/modules/deck';
 import { GameState } from '@/store/modules/game';
 import { Avatar, Player } from '@/store/modules/player';
 import { exposeMockFirebaseApp } from 'ts-mock-firebase';
+import { firestore } from 'firebase';
 
 describe('Deck Store Module', () => {
   const firebaseMock = exposeMockFirebaseApp(app);
@@ -150,7 +151,7 @@ describe('Deck Store Module', () => {
       const deck = decksRef.docs[0].data() as Deck;
 
       expect(Object.values(deck.drawnCards).length).toBe(0);
-      expect(deck.currentCard).toBeUndefined();
+      expect(deck.currentCard).toEqual(firestore.FieldValue.delete());
     });
   });
 });

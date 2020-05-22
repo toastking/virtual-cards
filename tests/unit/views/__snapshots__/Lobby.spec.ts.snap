@@ -11,12 +11,14 @@ exports[`Lobby View renders the lobby 1`] = `
   </h1>
    
   <div
-    class="container has-background-info has-text-white columns is-vcentered"
+    class="has-background-info has-text-white columns is-vcentered"
   >
     <div
       class="share-text column is-three-quarters"
     >
+      
       Share! http://localhost/#/start/undefined
+    
     </div>
      
     <div
