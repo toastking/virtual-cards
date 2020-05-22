@@ -1,78 +1,64 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`PlayArea snapshots hide cards when the game is over 1`] = `
-<section>
+<div
+  class="playing-card-container columns box"
+>
+  <!---->
+   
   <div
-    class="playing-card-container container box"
+    class="column"
+    id="drawn-cards"
   >
-    <div
-      class="level"
-    >
-      <!---->
-       
-      <div
-        class="level-item"
-      >
-        <vue-playing-card-stub
-          enter-active-class="animate__animated animate__flipInY"
-          name="playingcard"
-          signature="4s"
-          tag="div"
-        />
-      </div>
-    </div>
+    <vue-playing-card-stub
+      enter-active-class="animate__animated animate__flipInY"
+      name="playingcard"
+      signature="4s"
+      tag="div"
+    />
   </div>
-</section>
+</div>
 `;
 
 exports[`PlayArea snapshots show a card when there is one 1`] = `
-<section>
+<div
+  class="playing-card-container columns box"
+>
   <div
-    class="playing-card-container container box"
+    class="column remaining-deck"
+    id="deck"
   >
-    <div
-      class="level"
-    >
-      <div
-        class="level-item remaining-deck"
-      >
-        <vue-playing-card-stub
-          cover="true"
-        />
-      </div>
-       
-      <div
-        class="level-item"
-      >
-        <vue-playing-card-stub
-          enter-active-class="animate__animated animate__flipInY"
-          name="playingcard"
-          signature="4s"
-          tag="div"
-        />
-      </div>
-    </div>
+    <vue-playing-card-stub
+      cover="true"
+    />
   </div>
-</section>
+   
+  <div
+    class="column"
+    id="drawn-cards"
+  >
+    <vue-playing-card-stub
+      enter-active-class="animate__animated animate__flipInY"
+      name="playingcard"
+      signature="4s"
+      tag="div"
+    />
+  </div>
+</div>
 `;
 
 exports[`PlayArea snapshots show only the blank deck when there are no decks 1`] = `
-<section>
+<div
+  class="playing-card-container columns box"
+>
   <div
-    class="playing-card-container container box"
+    class="column remaining-deck"
+    id="deck"
   >
-    <div
-      class="level"
-    >
-      <div
-        class="level-item remaining-deck"
-      >
-        <vue-playing-card-stub
-          cover="true"
-        />
-      </div>
-       
-    </div>
+    <vue-playing-card-stub
+      cover="true"
+    />
   </div>
-</section>
+   
+</div>
 `;

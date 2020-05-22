@@ -3,6 +3,7 @@
 exports[`PlayerList renders the list of players from the store 1`] = `
 <div
   class="box has-background-white-ter"
+  id="player-list"
 >
   <h2
     class="title is-2"
@@ -26,7 +27,9 @@ exports[`PlayerList renders the list of players from the store 1`] = `
         >
           <div>
             <img
+              height="64"
               src="../assets/logo.png"
+              width="64"
             />
           </div>
         </div>
@@ -59,7 +62,9 @@ exports[`PlayerList renders the list of players from the store 1`] = `
         >
           <div>
             <img
+              height="64"
               src="../assets/logo.png"
+              width="64"
             />
           </div>
         </div>
@@ -80,5 +85,7 @@ exports[`PlayerList renders the list of players from the store 1`] = `
       </span>
     </li>
   </ol>
+   
+  <!---->
 </div>
 `;

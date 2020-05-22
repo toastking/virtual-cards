@@ -40,7 +40,7 @@
       aria-role="dialog"
       aria-modal
     >
-      <playerDialog :player="clickedPlayer"></playerDialog>
+      <playerDialog v-if="clickedPlayer" :player="clickedPlayer"></playerDialog>
     </b-modal>
   </div>
 </template>

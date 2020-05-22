@@ -4,6 +4,7 @@ exports[`History snapshots a few history elements 1`] = `
 <span
   class="history-list list"
   enter-active-class="animate__animated animate__fadeIn"
+  id="history"
   leave-active-class="animate__animated animate__fadeOut"
   name="list"
   tag="ol"
@@ -59,6 +60,7 @@ exports[`History snapshots empty list 1`] = `
 <span
   class="history-list list"
   enter-active-class="animate__animated animate__fadeIn"
+  id="history"
   leave-active-class="animate__animated animate__fadeOut"
   name="list"
   tag="ol"

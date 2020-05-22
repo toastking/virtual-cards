@@ -20,6 +20,7 @@ describe('PlayerDialog', () => {
   localVue.use(Buefy);
 
   afterEach(() => {
+    jest.resetAllMocks();
     store.reset();
   });
 
@@ -49,6 +50,10 @@ describe('PlayerDialog', () => {
       localVue,
       mocks,
     });
+
+    const mockClose = jest.fn();
+    wrapper.setMethods({ closeDialog: mockClose });
+
     const playerNameInput = wrapper.find('#new-player-name-input');
     playerNameInput.setValue('mort');
 
@@ -57,5 +62,6 @@ describe('PlayerDialog', () => {
     wrapper.find('#change-player-name-button').trigger('click');
 
     expect(store.dispatch).toHaveBeenCalledWith('changePlayerName', 'mort');
+    expect(mockClose).toHaveBeenCalled();
   });
 });

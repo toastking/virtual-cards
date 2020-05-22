@@ -5,6 +5,7 @@ exports[`GameNotification snapshots show player banner when it is their turn 1`]
   class="hero is-info container"
   enter-active-class="animate__animated animate__jackInTheBox"
   exit-active-class="animate__animated animate__slideOutLeft"
+  id="turn-notification"
   tag="div"
 >
   <div

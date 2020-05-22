@@ -19,14 +19,14 @@
             type="is-primary"
             v-on:click="
               changePlayerName(name);
-              $parent.close();
+              closeDialog();
             "
             >Change Name</b-button
           >
         </div>
       </section>
       <footer class="modal-card-foot">
-        <button class="button" type="button" @click="$parent.close()">
+        <button class="button" type="button" @click="closeDialog()">
           Close
         </button>
       </footer>
@@ -57,6 +57,9 @@ export default Vue.extend({
   },
   methods: {
     ...mapActions(['changePlayerName']),
+    closeDialog() {
+      (this.$parent as Vue & { close: () => void }).close();
+    },
   },
 });
 </script>
