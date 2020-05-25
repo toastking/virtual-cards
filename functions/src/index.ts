@@ -6,8 +6,8 @@ admin.initializeApp();
 // // Start writing Firebase Functions
 // // https://firebase.google.com/docs/functions/typescript
 //
-export const setupGame = functions.https.onRequest(
-  async (request, response) => {
+export const setupGame = functions.https.onCall(
+  async (data: { hostPlayer: Player }, context) => {
     const newGame: Game = {
       currentPlayer: null,
       gameCompleted: false,
@@ -19,7 +19,7 @@ export const setupGame = functions.https.onRequest(
       .add(newGame);
 
     // Add the player
-    const playerToAdd: Player = request.body;
+    const playerToAdd: Player = data.hostPlayer;
     await game.collection('players').add(playerToAdd);
 
     // Initialize the deck
@@ -27,6 +27,6 @@ export const setupGame = functions.https.onRequest(
     await game.collection('decks').add(newDeck);
 
     //Send back the game id
-    return response.send(game.id);
+    return game.id;
   }
 );

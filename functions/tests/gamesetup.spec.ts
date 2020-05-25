@@ -24,13 +24,10 @@ describe('Game Setup', () => {
 
   it('should setup the game', async () => {
     const hostPlayer: Player = { name: 'mort', avatar: Avatar.ALPACA };
-    const req = { body: hostPlayer } as functions.Request;
-    const resp = { send: jest.fn() };
-    // tslint:disable-next-line: no-void-expression
-    await setupGame(req, (resp as unknown) as functions.Response);
-    expect(resp.send).toHaveBeenCalledWith(expect.any(String));
+    const req = { hostPlayer };
 
-    const gameId = resp.send.mock.calls[0][0];
+    const gameId: string = await setupGame.run(req, {});
+
     const game = await admin
       .firestore()
       .collection('games')
