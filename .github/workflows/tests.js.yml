@@ -35,11 +35,11 @@ jobs:
         run: npm ci
       - run: node -v
       - name: Deploy to Firebase
-      uses: w9jds/firebase-action@master
-      with:
-        args: emulators:start
-      env:
-        FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+        uses: w9jds/firebase-action@master
+        with:
+          args: emulators:start
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
       # Install NPM dependencies, cache them correctly
       # and run all Cypress tests
       - name: Cypress run
