@@ -19,11 +19,6 @@ yarn-error.log*
 *.njsproj
 *.sln
 *.sw?
-firestore.rules
-firebase.json
-firestore.indexes.json
-.firebaserc
 firestore-debug.log
-.firebase/*
 firebase-debug.log
 functions/serviceAccount.json
