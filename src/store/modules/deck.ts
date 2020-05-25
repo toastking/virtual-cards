@@ -1,20 +1,9 @@
 import { db } from '@/db';
 import { State } from '@/store';
+import { firestore } from 'firebase';
 import { Module } from 'vuex';
 import { firestoreAction } from 'vuexfire';
-import { Game } from './game';
-import { firestore } from 'firebase';
-
-export interface Deck {
-  drawnCards: string[];
-  currentCard?: string;
-  id?: string; // Id from firestore
-}
-
-export interface DeckState {
-  decks: Deck[];
-  currentDeckIndex: number;
-}
+import { Deck, DeckState, Game } from '../state';
 
 const baseDeck = createInitialDeck();
 

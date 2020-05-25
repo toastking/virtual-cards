@@ -3,19 +3,7 @@ import { State } from '@/store';
 import { firestore } from 'firebase';
 import { Module } from 'vuex';
 import { firestoreAction } from 'vuexfire';
-import { Player } from './player';
-
-/** A record of what card was drawn by what user */
-export interface HistoryEntry {
-  playerId: string;
-  /** String representation of a card based on vue-plaing-card */
-  card: string;
-  timestamp: firestore.Timestamp;
-}
-/** State for which card was drawn and when */
-export interface HistoryState {
-  history: HistoryEntry[] | null;
-}
+import { HistoryEntry, HistoryState, Player } from '../state';
 
 export const HistoryModule: Module<HistoryState, State> = {
   state: () => ({ history: [] }),

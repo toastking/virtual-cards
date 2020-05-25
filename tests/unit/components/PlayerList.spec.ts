@@ -1,9 +1,8 @@
 import PlayerList from '@/components/PlayerList.vue';
-import { Game, GameState } from '@/store/modules/game';
-import { Avatar, Player, PlayerState } from '@/store/modules/player';
 import { createLocalVue, mount, shallowMount } from '@vue/test-utils';
 import Buefy from 'buefy';
 import { Store } from 'vuex-mock-store';
+import { Player, Avatar, PlayerState, Game, GameState } from '@/store/state';
 
 describe('PlayerList', () => {
   const player1: Player = { name: 'foo', id: 'currentId', avatar: Avatar.NONE };

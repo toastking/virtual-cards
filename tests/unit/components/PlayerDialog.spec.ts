@@ -1,5 +1,5 @@
 import PlayerDialog from '@/components/PlayerDialog.vue';
-import { Avatar, Player, PlayerState } from '@/store/modules/player';
+import { Avatar, Player, PlayerState } from '@/store/state';
 import { createLocalVue, mount, shallowMount } from '@vue/test-utils';
 import Buefy from 'buefy';
 import Vue from 'vue';

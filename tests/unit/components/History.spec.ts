@@ -1,6 +1,5 @@
 import History from '@/components/History.vue';
-import { HistoryEntry } from '@/store/modules/history';
-import { Avatar, Player } from '@/store/modules/player';
+import { Avatar, HistoryEntry, Player } from '@/store/state';
 import { mount } from '@vue/test-utils';
 import { firestore } from 'firebase';
 import MockDate from 'mockdate';

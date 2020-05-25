@@ -1,5 +1,5 @@
 import CreateGame from '@/components/CreateGame.vue';
-import { Avatar } from '@/store/modules/player';
+import { Avatar } from '@/store/state';
 import { createLocalVue, mount } from '@vue/test-utils';
 import Buefy from 'buefy';
 import Vue from 'vue';

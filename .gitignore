@@ -27,3 +27,4 @@ firestore.indexes.json
 firestore-debug.log
 .firebase/*
 firebase-debug.log
+functions/serviceAccount.json

@@ -1,13 +1,7 @@
 import { app } from '@/db';
-import { GameState } from '@/store/modules/game';
-import {
-  Avatar,
-  Player,
-  PlayerModule,
-  PlayerState,
-} from '@/store/modules/player';
+import { PlayerModule } from '@/store/modules/player';
+import { Avatar, GameState, Player, PlayerState } from '@/store/state';
 import { exposeMockFirebaseApp, MockDatabase } from 'ts-mock-firebase';
-import { firebaseAction } from 'vuexfire/dist/packages/vuexfire/src';
 
 describe('Player Store Module', () => {
   const firebaseMock = exposeMockFirebaseApp(app);

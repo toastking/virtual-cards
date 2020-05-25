@@ -2,28 +2,7 @@ import { db } from '@/db';
 import { State } from '@/store';
 import { Module } from 'vuex';
 import { firestoreAction } from 'vuexfire';
-import { Game } from './game';
-
-export enum Avatar {
-  NONE,
-  ALPACA,
-  BUFALLO,
-  GIRAFFE,
-  OTTER,
-  SHEEP,
-}
-
-export interface Player {
-  name: string;
-  avatar: Avatar;
-  id?: string;
-}
-
-export interface PlayerState {
-  players: Player[];
-  /** The player id for the current user */
-  userPlayerId: string;
-}
+import { Game, Player, PlayerState } from '../state';
 
 /** Module to handle player state, like who's in the game and who is the current player. */
 export const PlayerModule: Module<PlayerState, State> = {

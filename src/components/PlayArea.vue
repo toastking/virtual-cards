@@ -40,6 +40,7 @@ export default Vue.extend({
   computed: {
     ...mapGetters(['gameOver', 'decks', 'isYourTurn', 'turnIsLoading']),
   },
+  // tslint:disable-next-line:no-empty
   methods: { ...mapActions(['doTurn']), turnHandler() {} },
 });
 </script>

@@ -3,29 +3,7 @@ import router from '@/router';
 import { State } from '@/store';
 import { Module } from 'vuex';
 import { firestoreAction } from 'vuexfire';
-import { Avatar, Player } from './player';
-
-export enum LoadingStatus {
-  NOT_STARTED,
-  LOADING,
-  OK,
-  ERROR,
-}
-
-/** Represents the general state of a card game */
-export interface Game {
-  currentPlayer: string | null;
-  gameCompleted: boolean;
-  gameStarted: boolean;
-}
-
-export interface GameState {
-  gameId: string | null;
-  gameLoadingStatus: LoadingStatus;
-  game: Game;
-  // Loading for the request for the turn
-  turnLoadingState: LoadingStatus;
-}
+import { Avatar, Game, GameState, LoadingStatus, Player } from '../state';
 
 /** Module to handle game state. This is things like the game ID and the completion state. */
 export const GameModule: Module<GameState, State> = {
