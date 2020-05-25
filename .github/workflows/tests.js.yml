@@ -45,4 +45,5 @@ jobs:
         with:
           start: npm run serve
           wait-on: http://localhost:8081/
+          wait-on-timeout: 120
           browser: chrome
