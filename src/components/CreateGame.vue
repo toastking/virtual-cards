@@ -54,7 +54,7 @@
 </template>
 
 <script lang="ts">
-import { Avatar } from '@/store/modules/player';
+import { Avatar } from '@/store/state';
 import Vue from 'vue';
 import { mapActions } from 'vuex';
 

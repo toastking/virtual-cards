@@ -1,8 +1,8 @@
 import PlayArea from '@/components/PlayArea.vue';
-import { DeckState } from '@/store/modules/deck';
 import { createLocalVue, mount, shallowMount } from '@vue/test-utils';
 import VuePlayingCard from 'vue-playing-card';
 import { Store } from 'vuex-mock-store';
+import { DeckState } from '@/store/state';
 
 describe('PlayArea', () => {
   const decks: DeckState['decks'] = [{ drawnCards: [] }];

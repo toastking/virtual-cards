@@ -49,10 +49,10 @@
 import Avatar from '@/components/Avatar.vue';
 import PlayerDialog from '@/components/PlayerDialog.vue';
 import { State } from '@/store';
-import { Player, PlayerState } from '@/store/modules/player';
 import Vue from 'vue';
 import { mapGetters, mapState } from 'vuex';
 import { GameModule } from '../store/modules/game';
+import { Player } from '@/store/state';
 
 export default Vue.extend({
   data: () => ({

@@ -35,8 +35,9 @@
 </template>
 
 <script lang="ts">
-import { Avatar } from '@/store/modules/player';
 import Vue from 'vue';
+import { Avatar } from '@/store/state';
+
 export default Vue.extend({
   data: () => ({ Avatar }),
   props: ['avatar'],
