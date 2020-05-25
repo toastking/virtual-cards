@@ -34,7 +34,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - run: node -v
-      - name: Deploy to Firebase
+      - name: Start Firebase Emulators
         uses: w9jds/firebase-action@master
         with:
           args: emulators:start
