@@ -1,6 +1,7 @@
 # Zooted
 
-![Unit Tests](https://github.com/toastking/virtual-cards/workflows/Node%20test/badge.svg)
+![Tests](https://github.com/toastking/virtual-cards/workflows/Tests/badge.svg?branch=master)
+
 Zooted is a way to play card games like kings virtually.
 
 ## Project setup
