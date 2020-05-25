@@ -38,6 +38,6 @@ jobs:
       - name: Run tests
         uses: w9jds/firebase-action@master
         with:
-          args: firebase emulators:exec --only firestore,functions "vue-cli-service test:e2e --headless"
+          args: firebase emulators:exec "vue-cli-service test:e2e --headless"
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
