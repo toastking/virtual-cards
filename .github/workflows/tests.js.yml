@@ -34,10 +34,8 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - run: node -v
-      - name: Start Firebase Emulators
+      - name: Setup Firebase CLI
         uses: w9jds/firebase-action@master
-        with:
-          args: emulators:start
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
       # Install NPM dependencies, cache them correctly
@@ -45,6 +43,6 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v1
         with:
-          start: npm run ci:serve
+          start: npm run serve
           wait-on: http://localhost:8081/
           browser: chrome

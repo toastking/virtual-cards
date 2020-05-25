@@ -22,3 +22,4 @@ yarn-error.log*
 firestore-debug.log
 firebase-debug.log
 functions/serviceAccount.json
+.firebase/*.cache

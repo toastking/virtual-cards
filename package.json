@@ -3,12 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "firebase emulators:exec --only firestore \"vue-cli-service serve\"",
+    "serve": "firebase emulators:exec \"vue-cli-service serve\"",
     "build": "vue-cli-service build",
     "deploy": "npm run build && firebase deploy",
     "test:unit": "vue-cli-service test:unit",
-    "test:e2e": "firebase emulators:exec --only firestore \"vue-cli-service test:e2e\"",
-    "ci:serve": "vue-cli-service serve",
+    "test:e2e": "firebase emulators:exec \"vue-cli-service test:e2e\"",
     "test:all": "npm run test:unit && npm run test:e2e",
     "lint": "vue-cli-service lint",
     "test:debug": "node --inspect-brk node_modules/.bin/vue-cli-service test:unit --no-cache --watch --runInBand"
