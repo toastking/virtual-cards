@@ -19,7 +19,6 @@ yarn-error.log*
 *.njsproj
 *.sln
 *.sw?
-src/db.ts
 firestore.rules
 firebase.json
 firestore.indexes.json

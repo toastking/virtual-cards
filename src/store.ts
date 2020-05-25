@@ -1,10 +1,18 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import { vuexfireMutations } from 'vuexfire';
-import { DeckModule, DeckState } from './store/modules/deck';
-import { GameModule, GameState, LoadingStatus } from './store/modules/game';
-import { HistoryModule, HistoryState } from './store/modules/history';
-import { Player, PlayerModule, PlayerState } from './store/modules/player';
+import { DeckModule } from './store/modules/deck';
+import { GameModule } from './store/modules/game';
+import { HistoryModule } from './store/modules/history';
+import { PlayerModule } from './store/modules/player';
+import {
+  DeckState,
+  GameState,
+  HistoryState,
+  LoadingStatus,
+  Player,
+  PlayerState,
+} from './store/state';
 
 Vue.use(Vuex);
 

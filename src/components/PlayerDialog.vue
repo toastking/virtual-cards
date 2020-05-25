@@ -35,10 +35,10 @@
 </template>
 
 <script lang="ts">
-import { Player } from '@/store/modules/player';
 import Vue, { PropType } from 'vue';
 import { mapActions, mapState } from 'vuex';
 import { State } from '../store';
+import { Player } from '@/store/state';
 
 export default Vue.extend({
   data: () => ({ name: '' }),
