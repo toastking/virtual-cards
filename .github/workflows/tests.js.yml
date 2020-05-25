@@ -36,6 +36,6 @@ jobs:
       - name: Build functions
         run: npm run build:functions
       - name: Run tests
-        run: firebase emulators:exec "vue-cli-service test:e2e --headless"
+        run: npm run test:e2e
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
