@@ -1,33 +1,30 @@
-import { app } from '@/db';
+import { db } from '@/db';
 import { PlayerModule } from '@/store/modules/player';
 import { Avatar, GameState, Player, PlayerState } from '@/store/state';
-import { exposeMockFirebaseApp, MockDatabase } from 'ts-mock-firebase';
+import * as firebase from '@firebase/testing';
+
+jest.mock('@/db');
 
 describe('Player Store Module', () => {
-  const firebaseMock = exposeMockFirebaseApp(app);
   const actions = PlayerModule.actions!;
-
-  beforeEach(() => {
-    firebaseMock.firestore().mocker.reset(); // this will reset the whole database into an initial state
-  });
 
   afterEach(() => {
     jest.resetAllMocks();
+    firebase.clearFirestoreData({ projectId: 'remote-cards' });
   });
 
   describe('actions', () => {
     test('addPlayer', async () => {
-      const firestoreMock = firebaseMock.firestore().mocker;
       const player: Player = { name: 'foo', avatar: Avatar.NONE };
       const gameState: Partial<GameState> = { gameId: 'xyz' };
       const rootState = { game: gameState };
       const addPlayer = actions.addPlayer as Function;
 
       await addPlayer({ rootState }, player);
-      const game = firestoreMock.collection('games').mocker.doc('xyz').mocker;
-      const players = game.collection('players').mocker.getShallowCollection();
+      const game = db.collection('games').doc('xyz');
+      const players = await game.collection('players').get();
 
-      expect(Object.values(players)).toEqual([player]);
+      expect(players.docs[0].data()).toEqual(player);
     });
 
     test('addUserPlayer', async () => {
@@ -75,37 +72,29 @@ describe('Player Store Module', () => {
           { name: 'world', id: 'id2', avatar: Avatar.NONE },
         ],
       };
-      firebaseMock
-        .firestore()
-        .doc('games/xyz')
-        .set({ currentPlayer: 'id1' });
+      db.doc('games/xyz').set({ currentPlayer: 'id1' });
 
       await nextPlayer({ state, rootState });
 
-      const updatedGame = await firebaseMock
-        .firestore()
-        .doc('games/xyz')
-        .get();
+      const updatedGame = await db.doc('games/xyz').get();
       expect(updatedGame.data()!.currentPlayer).toBe('id2');
     });
 
     test('changePlayerName', async () => {
       const player: Player = { id: 'id', name: 'foo', avatar: Avatar.NONE };
 
-      const firestore = firebaseMock.firestore();
-      // mock the database
-      const mockDatabase: MockDatabase = {
-        games: {
-          docs: {
-            xyz: {
-              collections: {
-                players: { docs: { id: { data: player } } },
-              },
-            },
-          },
-        },
-      };
-      firestore.mocker.fromMockDatabase(mockDatabase);
+      // Add the game
+      await db
+        .collection('games')
+        .doc('xyz')
+        .set({});
+      // Add the players list
+      await db
+        .collection('games')
+        .doc('xyz')
+        .collection('players')
+        .doc('id')
+        .set(player);
 
       const changePlayerName = actions.changePlayerName as Function;
       const getters = { userPlayer: player };
@@ -114,7 +103,12 @@ describe('Player Store Module', () => {
       await changePlayerName({ getters, rootState }, 'tony');
 
       const updatedPlayer = (
-        await firestore.doc('games/xyz/players/id').get()
+        await db
+          .collection('games')
+          .doc('xyz')
+          .collection('players')
+          .doc('id')
+          .get()
       ).data();
 
       expect(updatedPlayer!.name).toBe('tony');

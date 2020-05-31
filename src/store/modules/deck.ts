@@ -1,9 +1,9 @@
-import { db } from '@/db';
+import { app, db, fieldValues } from '@/db';
 import { State } from '@/store';
-import { firestore } from 'firebase';
 import { Module } from 'vuex';
 import { firestoreAction } from 'vuexfire';
 import { Deck, DeckState, Game } from '../state';
+import firebase from 'firebase';
 
 const baseDeck = createInitialDeck();
 
@@ -76,7 +76,7 @@ export const DeckModule: Module<DeckState, State> = {
 
         deckDocuments.forEach(deck => {
           const updatedDeck = {
-            currentCard: firestore.FieldValue.delete(),
+            currentCard: fieldValues.delete(),
             drawnCards: [],
           };
           batch.update(decksRef.doc(deck.id), updatedDeck);

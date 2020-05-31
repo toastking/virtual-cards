@@ -1,4 +1,4 @@
-import { db } from '@/db';
+import { db, fieldValues, timestamp } from '@/db';
 import { State } from '@/store';
 import { firestore } from 'firebase';
 import { Module } from 'vuex';
@@ -13,7 +13,7 @@ export const HistoryModule: Module<HistoryState, State> = {
       const historyEntry: HistoryEntry = {
         playerId: payload.player?.id ?? '',
         card: payload.card,
-        timestamp: firestore.Timestamp.fromDate(new Date()),
+        timestamp: timestamp.fromDate(new Date()),
       };
 
       const { gameId } = rootState.game;
