@@ -69,7 +69,12 @@ describe('Deck Store Module', () => {
 
       await drawCard({ state, rootState, getters, rootGetters, dispatch });
 
-      const newDeckRef = await db.doc('games/xyz/decks/deck1').get();
+      const newDeckRef = await db
+        .collection('games')
+        .doc('xyz')
+        .collection('decks')
+        .doc('deck1')
+        .get();
 
       const newDeck = newDeckRef.data();
 

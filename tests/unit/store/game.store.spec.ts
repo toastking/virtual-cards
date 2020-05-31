@@ -47,7 +47,7 @@ describe('Game Store Module', () => {
       });
     });
 
-    test.only('joinGame', async () => {
+    test('joinGame', async () => {
       const joinGame = actions.joinGame as Function;
       const dispatch = jest.fn();
       const commit = jest.fn();
