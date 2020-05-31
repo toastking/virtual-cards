@@ -12,6 +12,14 @@ const firebaseConfig = {
 };
 export const app = firebase.initializeApp(firebaseConfig);
 export const db = app.firestore();
+export const functions = app.functions();
+app.analytics();
+
+/** exported field values so we use a shared instance */
+export const fieldValues = firebase.firestore.FieldValue;
+/** Firestore timestamp handling */
+export const timestamp = firebase.firestore.Timestamp;
+
 if (location.hostname === 'localhost') {
   db.settings({
     host: 'localhost:8080',

@@ -1,15 +1,17 @@
-import { app } from '@/db';
-import { firestore } from 'firebase';
-import MockDate from 'mockdate';
-import { exposeMockFirebaseApp } from 'ts-mock-firebase';
+import { db } from '@/db';
 import { HistoryModule } from '@/store/modules/history';
-import { GameState, Player, HistoryEntry } from '@/store/state';
-describe('History Store Module', () => {
-  const firebaseMock = exposeMockFirebaseApp(app);
+import { GameState, HistoryEntry, Player } from '@/store/state';
+import * as firebase from '@firebase/testing';
+import MockDate from 'mockdate';
 
+jest.mock('@/db');
+
+describe('History Store Module', () => {
   beforeEach(() => {
     jest.resetAllMocks();
-    firebaseMock.firestore().mocker.reset(); // this will reset the whole database into an initial state
+    firebase.clearFirestoreData({
+      projectId: 'remote-cards',
+    });
   });
 
   describe('actions', () => {
@@ -25,8 +27,7 @@ describe('History Store Module', () => {
 
       await addHistory({ rootState }, { player, card });
 
-      const historyCollection = await firebaseMock
-        .firestore()
+      const historyCollection = await db
         .collection('games')
         .doc('xyz')
         .collection('history')

@@ -1,14 +1,14 @@
-import { app } from '@/db';
-import { exposeMockFirebaseApp } from 'ts-mock-firebase';
-import { firestore } from 'firebase';
+import { db } from '@/db';
 import { DeckModule } from '@/store/modules/deck';
-import { GameState, DeckState, Player, Avatar, Deck } from '@/store/state';
+import { Avatar, Deck, DeckState, GameState, Player } from '@/store/state';
+import * as firebase from '@firebase/testing';
+import { firestore } from 'firebase';
+
+jest.mock('@/db');
 
 describe('Deck Store Module', () => {
-  const firebaseMock = exposeMockFirebaseApp(app);
-
   beforeEach(() => {
-    firebaseMock.firestore().mocker.reset(); // this will reset the whole database into an initial state
+    firebase.clearFirestoreData({ projectId: 'remote-cards' });
   });
 
   describe('actions', () => {
@@ -17,18 +17,23 @@ describe('Deck Store Module', () => {
     const rootState = { game: gameState };
 
     test('addDeck', async () => {
-      firebaseMock.firestore().mocker.loadCollection('games', { xyz: {} });
+      await db
+        .collection('games')
+        .doc('xyz')
+        .set({});
+
       const addDeck = actions.addDeck as Function;
 
       await addDeck({ rootState });
 
-      const decks = firebaseMock
-        .firestore()
-        .mocker.collection('games')
-        .mocker.doc('xyz')
-        .mocker.collection('decks')
-        .mocker.getShallowCollection();
-
+      // Set the deck
+      const decks = (
+        await db
+          .collection('games')
+          .doc('xyz')
+          .collection('decks')
+          .get()
+      ).docs;
       expect(Object.values(decks).length).toBe(1);
     });
 
@@ -36,11 +41,11 @@ describe('Deck Store Module', () => {
       const drawCard = actions.drawCard as Function;
 
       // Setup firestore
-      firebaseMock.firestore().mocker.loadCollection('games', {
-        xyz: {},
-      });
-      firebaseMock
-        .firestore()
+      await db
+        .collection('games')
+        .doc('xyz')
+        .set({});
+      await db
         .doc('games/xyz')
         .collection('decks')
         .doc('deck1')
@@ -64,9 +69,11 @@ describe('Deck Store Module', () => {
 
       await drawCard({ state, rootState, getters, rootGetters, dispatch });
 
-      const newDeckRef = await firebaseMock
-        .firestore()
-        .doc('games/xyz/decks/deck1')
+      const newDeckRef = await db
+        .collection('games')
+        .doc('xyz')
+        .collection('decks')
+        .doc('deck1')
         .get();
 
       const newDeck = newDeckRef.data();
@@ -85,17 +92,13 @@ describe('Deck Store Module', () => {
       const drawCard = actions.drawCard as Function;
 
       // Setup firestore
-      firebaseMock.firestore().mocker.loadCollection('games', {
-        xyz: {},
-      });
-      firebaseMock
-        .firestore()
-        .doc('games/xyz')
+      await db
+        .collection('games')
+        .doc('xyz')
         .set({ gameCompleted: false });
-
-      firebaseMock
-        .firestore()
-        .doc('games/xyz')
+      await db
+        .collection('games')
+        .doc('xyz')
         .collection('decks')
         .doc('deck1')
         .set({ drawnCards: [] });
@@ -111,9 +114,9 @@ describe('Deck Store Module', () => {
 
       await drawCard({ state, rootState, getters });
 
-      const gameRef = await firebaseMock
-        .firestore()
-        .doc('games/xyz')
+      const gameRef = await db
+        .collection('games')
+        .doc('xyz')
         .get();
 
       const updatedGame = gameRef.data();
@@ -125,32 +128,29 @@ describe('Deck Store Module', () => {
       const restartGame = actions.restartGame as Function;
 
       // Setup firestore
-      firebaseMock.firestore().mocker.loadCollection('games', {
-        xyz: {},
-      });
-      firebaseMock
-        .firestore()
-        .doc('games/xyz')
+      await db
+        .collection('games')
+        .doc('xyz')
         .set({ gameCompleted: false });
 
-      firebaseMock
-        .firestore()
-        .doc('games/xyz')
+      await db
+        .collection('games')
+        .doc('xyz')
         .collection('decks')
         .doc('deck1')
         .set({ drawnCards: ['as'], currentCard: 'as' });
 
       await restartGame({ rootState });
 
-      const decksRef = await firebaseMock
-        .firestore()
-        .doc('games/xyz')
+      const decksRef = await db
+        .collection('games')
+        .doc('xyz')
         .collection('decks')
         .get();
       const deck = decksRef.docs[0].data() as Deck;
 
       expect(Object.values(deck.drawnCards).length).toBe(0);
-      expect(deck.currentCard).toEqual(firestore.FieldValue.delete());
+      expect(deck.currentCard).toBeUndefined();
     });
   });
 });

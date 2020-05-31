@@ -1,21 +1,22 @@
-import { app } from '@/db';
-import { exposeMockFirebaseApp } from 'ts-mock-firebase';
+import { db } from '@/db';
 import { GameModule } from '@/store/modules/game';
 import {
-  Game,
   Avatar,
-  Player,
+  Game,
   GameState,
-  PlayerState,
   LoadingStatus,
+  Player,
+  PlayerState,
 } from '@/store/state';
+import * as firebase from '@firebase/testing';
+
+jest.mock('@/db');
 
 describe('Game Store Module', () => {
-  const firebaseMock = exposeMockFirebaseApp(app);
   const actions = GameModule.actions!;
 
   beforeEach(() => {
-    firebaseMock.firestore().mocker.reset(); // this will reset the whole database into an initial state
+    firebase.clearFirestoreData({ projectId: 'remote-cards' });
   });
   afterEach(() => {
     jest.resetAllMocks();
@@ -30,16 +31,16 @@ describe('Game Store Module', () => {
       await createGameAction({ dispatch, commit }, { hostPlayerName: 'foo' });
 
       // Test the game and player were added
-      const games = firebaseMock.firestore().mocker.collection('games');
-      const gameId = Object.keys(games.mocker.getShallowCollection())[0];
-      const game = games.mocker.doc(gameId);
+      const games = (await db.collection('games').get()).docs;
       const expectedGame: Game = {
         currentPlayer: null,
         gameCompleted: false,
         gameStarted: false,
       };
-      expect(game.mocker.getData()).toEqual(expectedGame);
+      const game = games[0].data();
+      expect(game).toEqual(expectedGame);
 
+      const gameId = games[0].id;
       expect(dispatch).toHaveBeenCalledWith('joinGame', {
         gameId,
         playerName: 'foo',
@@ -50,6 +51,11 @@ describe('Game Store Module', () => {
       const joinGame = actions.joinGame as Function;
       const dispatch = jest.fn();
       const commit = jest.fn();
+      // Setup the game
+      await db
+        .collection('games')
+        .doc('xyz')
+        .set({});
       await joinGame(
         { dispatch, commit },
         { gameId: 'xyz', playerName: 'foo', avatar: Avatar.NONE }
@@ -70,8 +76,11 @@ describe('Game Store Module', () => {
       // Test that we update the gameStarted value for the game
       const startGame = actions.startGame as Function;
       const dispatch = jest.fn();
-      const firestore = firebaseMock.firestore();
-      firestore.mocker.loadCollection('games', { xyz: { gameStarted: false } });
+
+      await db
+        .collection('games')
+        .doc('xyz')
+        .set({ gameStarted: false });
 
       const state: Partial<GameState> = {
         gameId: 'xyz',
@@ -88,9 +97,13 @@ describe('Game Store Module', () => {
 
       await startGame({ state, dispatch, rootState });
 
-      const game = firestore.mocker
-        .collection('games')
-        .mocker.getShallowCollection().xyz;
+      const game = (
+        await db
+          .collection('games')
+          .doc('xyz')
+          .get()
+      ).data();
+
       expect(game).toEqual(
         expect.objectContaining({ gameStarted: true, currentPlayer: 'foo' })
       );
@@ -101,10 +114,11 @@ describe('Game Store Module', () => {
     test('restartGame', async () => {
       // Test that we update the gameStarted value for the game
       const restartGame = actions.restartGame as Function;
-      const firestore = firebaseMock.firestore();
-      firestore.mocker.loadCollection('games', {
-        xyz: { gameStarted: true, gameCompleted: true },
-      });
+
+      await db
+        .collection('games')
+        .doc('xyz')
+        .set({ gameStarted: true, gameCompleted: true });
 
       const state: Partial<GameState> = {
         gameId: 'xyz',
@@ -121,9 +135,13 @@ describe('Game Store Module', () => {
 
       await restartGame({ state, rootState });
 
-      const game = firestore.mocker
-        .collection('games')
-        .mocker.getShallowCollection().xyz;
+      const game = (
+        await db
+          .collection('games')
+          .doc('xyz')
+          .get()
+      ).data();
+
       expect(game).toEqual(
         expect.objectContaining({
           gameStarted: true,
