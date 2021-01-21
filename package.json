@@ -27,7 +27,7 @@
     "express": "^4.17.1",
     "firebase": "^7.14.3",
     "firestore-jest-mock": "^0.3.0",
-    "immer": "^6.0.5",
+    "immer": "^8.0.1",
     "lodash": "^4.17.15",
     "moment": "^2.25.3",
     "vue": "^2.6.10",
